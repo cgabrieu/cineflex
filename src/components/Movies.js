@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { URL_API } from './Consts';
+import Loading from './Loading';
 
 export default function Movies() {
 
@@ -13,11 +14,7 @@ export default function Movies() {
     });
   }, []);
 
-  if (listMovies === null) {
-    return (
-      <h1>CARREGANDO...</h1>
-    );
-  }
+  if (listMovies === null) return <Loading />;
 
   return (
     <>
