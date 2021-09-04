@@ -4,7 +4,9 @@ import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Topbar from './components/Topbar'
 import Movies from "./pages/Movies";
-import ShowtimesMovie from "./pages/ShowtimesMovie";
+import Showtimes from "./pages/Showtimes";
+import Seats from "./pages/Seats"
+import Error from "./components/Error";
 
 function App() {
 	return (
@@ -16,7 +18,13 @@ function App() {
 					<Movies />
 				</Route>
 				<Route exact path="/filme/:idMovie">
-					<ShowtimesMovie />
+					<Showtimes />
+				</Route>
+				<Route exact path="/assentos/:idShowtime">
+					<Seats />
+				</Route>
+				<Route path="/">
+					<Error />
 				</Route>
 			</Switch>
 		</Router>
@@ -27,6 +35,9 @@ const GlobalStyle = createGlobalStyle`
 	body {
 		font-family: "Roboto", sans-serif;
 		background-color: #E5E5E5;
+	}
+	h1, h2 {
+		color:#293845;
 	}
 `
 

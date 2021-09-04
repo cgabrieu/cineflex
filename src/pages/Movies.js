@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import { URL_API } from '../consts';
 import Loading from '../components/Loading';
+import Error from '../components/Error';
 import { TitlePage } from '../styles';
 
 export default function Movies() {
@@ -11,27 +12,32 @@ export default function Movies() {
   const [listMovies, setListMovies] = useState(null);
 
   useEffect(() => {
-    axios.get(URL_API).then(response => {
-      setListMovies(response.data);
-    });
+    axios.get(URL_API + "/movies")
+      .then(response => {
+        setListMovies(response.data);
+      })
+      .catch(() => {
+        setListMovies([])
+      });
   }, []);
 
   if (listMovies === null) return <Loading />;
+  else if (listMovies.length === 0) return <Error />;
 
   return (
     <>
       <TitlePage>Selecione o filme</TitlePage>
       <ListMovies>
-        {listMovies.map((e) => <li> <Movie movie={e} /> </li>)}
+        {listMovies.map((e, index) => <li key={index}> <Movie movie={e} /> </li>)}
       </ListMovies>
     </>
   );
 
 }
 
-const Movie = ({movie}) => 
+const Movie = ({ movie }) =>
   <Card>
-    <Link to={"/filme/"+movie.id}>
+    <Link to={"/filme/" + movie.id}>
       <img src={movie.posterURL} alt={movie.title} />
     </Link>
   </Card>;
@@ -51,6 +57,7 @@ const Card = styled.div`
   align-items: center;
   box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.1);
   margin: 5px 15px;
+  border-radius: 3px;
 
   img {
     width: 130px;

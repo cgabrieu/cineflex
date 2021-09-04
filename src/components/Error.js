@@ -5,7 +5,7 @@ const Error = () => (
 	<ContainerCenter>
 		<ErrorLogo />
 		<br />
-		<h2>Algo deu errado! Escolha outro filme.</h2>
+		<h2>Algo deu errado!</h2>
 	</ContainerCenter>
 );
 

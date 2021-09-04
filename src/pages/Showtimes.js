@@ -1,45 +1,51 @@
 import styled from 'styled-components';
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { TitlePage } from '../styles';
+import { URL_API } from '../consts';
+import { useParams, Link } from "react-router-dom";
 import Loading from '../components/Loading';
 import Error from '../components/Error';
-import { URL_API } from '../consts';
-import { useParams } from "react-router-dom";
-import axios from 'axios';
+import FooterFilm from '../components/FooterFilm';
 
-export default function ShowtimesMovie() {
+export default function Showtimes() {
 
-    const [listShowtime, setListShowtime] = useState(null);
+    const [showtimesInfo, setShowtimesInfo] = useState(null);
     const { idMovie } = useParams();
 
     useEffect(() => {
-        axios.get(`${URL_API}/${idMovie}/showtimes`)
+        axios.get(`${URL_API}/movies/${idMovie}/showtimes`)
             .then((response) => {
                 console.log(response.data);
-                setListShowtime(response.data);
+                setShowtimesInfo(response.data);
             })
             .catch(() => {
-                setListShowtime([]);
+                setShowtimesInfo([]);
             });
     }, []);
 
-    if (listShowtime === null) return <Loading />;
-    else if (listShowtime.length === 0) return <Error />
+    if (showtimesInfo === null) return <Loading />;
+    else if (showtimesInfo.length === 0) return <Error />;
 
     return (
         <>
             <TitlePage>Selecione o horário</TitlePage>
-            {listShowtime.days.map((e) => <Showtimes weekday={e.weekday} date={e.date} showtimes={e.showtimes} /> )}
+            {showtimesInfo.days.map((e, index) => <Showtime key={index} weekday={e.weekday} date={e.date} showtimes={e.showtimes} /> )}
+            <FooterFilm film={showtimesInfo}/>
         </>
     );
 }
 
 
-const Showtimes = ({ weekday, date, showtimes }) => (
+const Showtime = ({ weekday, date, showtimes }) => (
     <ContainerShowtime>
         <DayInfoShowtime>{weekday + " - " + date}</DayInfoShowtime>
-        {showtimes.map(({ name: time }) =>
-            <ButtonShowtime>{time}</ButtonShowtime>
+        {showtimes.map(({ name: time, id }, index) =>
+            <ButtonShowtime key={index}>
+                <Link to={"/assentos/" + id}>
+                    {time}
+                </Link>
+            </ButtonShowtime>
         )}
     </ContainerShowtime>
 );
@@ -50,7 +56,6 @@ const ContainerShowtime = styled.div`
 
 const DayInfoShowtime = styled.h2`
     font-size: 20px;
-    color: #293845;
     margin-bottom: 20px;
 `
 
