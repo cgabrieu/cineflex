@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import { TitlePage } from '../styles';
-import Loading from './Loading';
+import Loading from '../components/Loading';
+import Error from '../components/Error';
 import { URL_API } from '../consts';
 import { useParams } from "react-router-dom";
 import axios from 'axios';
@@ -12,32 +13,38 @@ export default function ShowtimesMovie() {
     const { idMovie } = useParams();
 
     useEffect(() => {
-        axios.get(`${URL_API}/${idMovie}/showtimes`).then(response => {
-            console.log(response.data);
-            setListShowtime(response.data);
-        });
+        axios.get(`${URL_API}/${idMovie}/showtimes`)
+            .then((response) => {
+                console.log(response.data);
+                setListShowtime(response.data);
+            })
+            .catch(() => {
+                setListShowtime([]);
+            });
     }, []);
 
     if (listShowtime === null) return <Loading />;
+    else if (listShowtime.length === 0) return <Error />
 
     return (
         <>
             <TitlePage>Selecione o horário</TitlePage>
-            {listShowtime.days.map((e) => {
-                return (
-                    <BoxShowtime>
-                        <DayInfoShowtime>{e.weekday + " - " + e.date}</DayInfoShowtime>
-                        {e.showtimes.map(({name: time}) => 
-                            <ButtonShowtime>{time}</ButtonShowtime>
-                        )}
-                    </BoxShowtime>
-                );
-            })}
+            {listShowtime.days.map((e) => <Showtimes weekday={e.weekday} date={e.date} showtimes={e.showtimes} /> )}
         </>
     );
 }
 
-const BoxShowtime = styled.div`
+
+const Showtimes = ({ weekday, date, showtimes }) => (
+    <ContainerShowtime>
+        <DayInfoShowtime>{weekday + " - " + date}</DayInfoShowtime>
+        {showtimes.map(({ name: time }) =>
+            <ButtonShowtime>{time}</ButtonShowtime>
+        )}
+    </ContainerShowtime>
+);
+
+const ContainerShowtime = styled.div`
     margin: 0 0 25px 25px;
 `
 

@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 import axios from 'axios';
 import { URL_API } from '../consts';
-import Loading from './Loading';
+import Loading from '../components/Loading';
 import { TitlePage } from '../styles';
 
 export default function Movies() {
@@ -30,7 +31,9 @@ export default function Movies() {
 
 const Movie = ({movie}) => 
   <Card>
-    <img src={movie.posterURL} alt={movie.title} />
+    <Link to={"/filme/"+movie.id}>
+      <img src={movie.posterURL} alt={movie.title} />
+    </Link>
   </Card>;
 
 const ListMovies = styled.ul`
@@ -38,7 +41,7 @@ const ListMovies = styled.ul`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-`
+`;
 
 const Card = styled.div`
   width: 145px;
@@ -52,5 +55,4 @@ const Card = styled.div`
   img {
     width: 130px;
   }
-
-`
+`;

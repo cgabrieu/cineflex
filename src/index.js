@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Topbar from './components/Topbar'
-import Movies from "./components/Movies";
-import ShowtimesMovie from "./components/ShowtimesMovie";
+import Movies from "./pages/Movies";
+import ShowtimesMovie from "./pages/ShowtimesMovie";
 
 function App() {
 	return (
