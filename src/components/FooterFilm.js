@@ -10,7 +10,12 @@ export default function FooterFilm({ film }) {
                 </> :
                 <>
                     <Card><img src={film.movie.posterURL} alt={film.movie.title} /></Card>
-                    <h1>{film.movie.title}</h1>
+                    <h1>
+                        {film.movie.title}
+                        <br/>
+                        {film.day.weekday+" - "+film.name}
+                    </h1>
+                    
                 </>}
         </Footer>
     );

@@ -31,14 +31,11 @@ export default function Seats() {
     return (
         <>
             <TitlePage>Selecione o(s) assentos(s)</TitlePage>
-
             <ContainerSeats>
                 {seatsInfo.seats.map(({ name, isAvailable }, index) =>
                     <Seat key={index} available={isAvailable}>{name}</Seat>
                 )}
             </ContainerSeats>
-
-
             <ContainerOptions>
                 <Seat available={null} showText />
                 <Seat available={true} showText />
@@ -57,7 +54,7 @@ const ContainerSeats = styled.div`
     align-items: center;
     flex-wrap: wrap;
     margin: 0 auto;
-    div {
+    li {
         margin: 5px;
         display: flex;
         flex-direction: column;
@@ -73,7 +70,6 @@ const ContainerOptions = styled(ContainerSeats)`
     justify-content: space-around;
     padding: 0 10%;
     margin-top: 5px;
-    flex-wrap: wrap;
     p {
         margin-top: 7px;
         color:#4E5A65;

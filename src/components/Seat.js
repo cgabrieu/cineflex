@@ -16,16 +16,16 @@ const Seat = ({ available, showText, children }) => {
     }
 
     return (
-        <div>
+        <li>
             <SeatStyle color={color} borderColor={borderColor}>
                 {children}
             </SeatStyle>
             {showText && <p>{text}</p>}
-        </div>
+        </li>
     );
 }
 
-const SeatStyle = styled.li`
+const SeatStyle = styled.div`
     width: 25px;
     height: 25px;
     display: flex;
