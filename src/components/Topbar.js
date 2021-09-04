@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export default function Top() {
+export default function Topbar() {
 
     return (
         <Header>

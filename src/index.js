@@ -1,20 +1,27 @@
 import "./reset.css";
 import ReactDOM from 'react-dom';
 import { createGlobalStyle } from 'styled-components';
-import Top from './components/Topbar'
+import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import Topbar from './components/Topbar'
 import Movies from "./components/Movies";
+import SessionsMovie from "./components/SessionsMovie";
 
 function App() {
 	return (
-		<>
+		<Router>
 			<GlobalStyle />
-			<Top />
-			<Movies />
-		</>
+			<Topbar />
+			<Switch>
+				<Route exact path="/">
+					<Movies />
+				</Route>
+				<Route exact path="/filme/:idFilme">
+					<SessionsMovie />
+				</Route>s
+			</Switch>
+		</Router>
 	);
 }
-
-ReactDOM.render(<App />, document.querySelector(".root"));
 
 const GlobalStyle = createGlobalStyle`
 	body {
@@ -22,3 +29,4 @@ const GlobalStyle = createGlobalStyle`
 		background-color: #E5E5E5;
 	}
 `
+ReactDOM.render(<App />, document.querySelector(".root"));

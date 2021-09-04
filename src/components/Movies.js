@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { URL_API } from './Consts';
+import { URL_API } from '../consts';
 import Loading from './Loading';
+import { TitlePage } from '../styles';
 
 export default function Movies() {
 
@@ -18,7 +19,7 @@ export default function Movies() {
 
   return (
     <>
-      <TitleHome>Selecione o filme</TitleHome>
+      <TitlePage>Selecione o filme</TitlePage>
       <ListMovies>
         {listMovies.map((e) => <li> <Movie movie={e} /> </li>)}
       </ListMovies>
@@ -27,17 +28,17 @@ export default function Movies() {
 
 }
 
+const Movie = ({movie}) => 
+  <Card>
+    <img src={movie.posterURL} alt={movie.title} />
+  </Card>;
+
 const ListMovies = styled.ul`
   width: 100%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 `
-
-const Movie = ({movie}) => 
-  <Card>
-    <img src={movie.posterURL} alt={movie.title} />
-  </Card>;
 
 const Card = styled.div`
   width: 145px;
@@ -53,10 +54,3 @@ const Card = styled.div`
   }
 
 `
-
-const TitleHome = styled.h1`
-  text-align: center;
-  font-size: 24px;
-  margin-top: 117px;
-  margin-bottom: 50px;
-`;
