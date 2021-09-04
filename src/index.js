@@ -4,7 +4,7 @@ import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Topbar from './components/Topbar'
 import Movies from "./components/Movies";
-import SessionsMovie from "./components/SessionsMovie";
+import ShowtimesMovie from "./components/ShowtimesMovie";
 
 function App() {
 	return (
@@ -15,9 +15,9 @@ function App() {
 				<Route exact path="/">
 					<Movies />
 				</Route>
-				<Route exact path="/filme/:idFilme">
-					<SessionsMovie />
-				</Route>s
+				<Route exact path="/filme/:idMovie">
+					<ShowtimesMovie />
+				</Route>
 			</Switch>
 		</Router>
 	);
@@ -29,4 +29,5 @@ const GlobalStyle = createGlobalStyle`
 		background-color: #E5E5E5;
 	}
 `
+
 ReactDOM.render(<App />, document.querySelector(".root"));
