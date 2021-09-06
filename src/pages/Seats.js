@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
-import { TitlePage, Button } from '../styles';
+import { TitlePage, Button, Container } from '../styles';
 import { URL_API } from '../consts';
 import { useParams, Link } from "react-router-dom";
 import Loading from '../components/Loading';
@@ -138,12 +138,4 @@ const ContainerOptions = styled(ContainerSeats)`
 const ButtonReservation = styled(Button)`
     margin-top: 40px;
     max-width: 250px;
-`
-
-const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-items: center;
-    align-items: center;
-    margin-bottom: 150px;
 `

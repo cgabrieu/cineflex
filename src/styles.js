@@ -26,8 +26,17 @@ const Button = styled.button`
     padding: 10px 20px;
 `;
 
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    margin-bottom: 150px;
+`
+
 export {
     TitlePage,
     ContainerCenter,
     Button,
+    Container,
 }
