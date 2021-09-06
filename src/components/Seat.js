@@ -16,25 +16,29 @@ const Seat = ({ available, showText, children }) => {
     }
 
     return (
-        <li>
-            <SeatStyle color={color} borderColor={borderColor}>
-                {children}
-            </SeatStyle>
+        <SeatStyle color={color} borderColor={borderColor}>
+            {children}
             {showText && <p>{text}</p>}
-        </li>
+        </SeatStyle>
     );
 }
 
 const SeatStyle = styled.div`
+    margin: 5px;
     width: 25px;
     height: 25px;
+    font-size: 11px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 11px;
     background-color: ${({ color }) => color};
     border: 1px solid ${({ borderColor }) => borderColor};
     border-radius: 50%;
+    p {
+        font-size: 13px;
+        margin-top: 50px;
+        color:#4E5A65;
+    }
 `;
 
 export default Seat;

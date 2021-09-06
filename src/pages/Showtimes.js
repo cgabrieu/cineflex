@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { TitlePage } from '../styles';
+import { TitlePage, Button } from '../styles';
 import { URL_API } from '../consts';
 import { useParams, Link } from "react-router-dom";
 import Loading from '../components/Loading';
@@ -41,11 +41,11 @@ const Showtime = ({ weekday, date, showtimes }) => (
     <ContainerShowtime>
         <DayInfoShowtime>{weekday + " - " + date}</DayInfoShowtime>
         {showtimes.map(({ name: time, id }, index) =>
-            <ButtonShowtime key={index}>
+            <Button key={index}>
                 <Link to={"/assentos/" + id}>
                     {time}
                 </Link>
-            </ButtonShowtime>
+            </Button>
         )}
     </ContainerShowtime>
 );
@@ -57,14 +57,4 @@ const ContainerShowtime = styled.div`
 const DayInfoShowtime = styled.h2`
     font-size: 20px;
     margin-bottom: 20px;
-`
-
-const ButtonShowtime = styled.button`
-    background-color: #E8833A;
-    margin-right: 10px;
-    color: #FFF;
-    border: none;
-    font-size: 18px;
-    border-radius: 3px;
-    padding: 10px 20px;
 `

@@ -7,6 +7,7 @@ import Movies from "./pages/Movies";
 import Showtimes from "./pages/Showtimes";
 import Seats from "./pages/Seats"
 import Error from "./components/Error";
+import Success from "./pages/Success";
 
 function App() {
 	return (
@@ -22,6 +23,9 @@ function App() {
 				</Route>
 				<Route exact path="/assentos/:idShowtime">
 					<Seats />
+				</Route>
+				<Route exact path="/sucesso">
+					<Success />
 				</Route>
 				<Route path="/">
 					<Error />

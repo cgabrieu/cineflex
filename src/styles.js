@@ -14,9 +14,20 @@ const ContainerCenter = styled.div`
   flex-direction: column;
 	justify-content: center;
 	align-items: center;
-`
+`;
+
+const Button = styled.button`
+    background-color: #E8833A;
+    margin-right: 10px;
+    color: #FFF;
+    border: none;
+    font-size: 18px;
+    border-radius: 3px;
+    padding: 10px 20px;
+`;
 
 export {
     TitlePage,
     ContainerCenter,
+    Button,
 }

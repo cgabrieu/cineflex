@@ -5,18 +5,22 @@ export default function FooterFilm({ film }) {
         <Footer>
             {film.movie === undefined ?
                 <>
-                    <Card><img src={film.posterURL} alt={film.title} /></Card>
+                    <Card>
+                        <img src={film.posterURL} alt={film.title} />
+                    </Card>
                     <h1>{film.title}</h1>
                 </> :
                 <>
-                    <Card><img src={film.movie.posterURL} alt={film.movie.title} /></Card>
+                    <Card>
+                        <img src={film.movie.posterURL} alt={film.movie.title} />
+                    </Card>
                     <h1>
                         {film.movie.title}
                         <br/>
                         {film.day.weekday+" - "+film.name}
                     </h1>
-                    
-                </>}
+                </>
+            }
         </Footer>
     );
 }

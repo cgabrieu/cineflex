@@ -1,52 +1,116 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
-import { TitlePage } from '../styles';
+import { TitlePage, Button } from '../styles';
+import { URL_API } from '../consts';
+import { useParams, Link } from "react-router-dom";
 import Loading from '../components/Loading';
 import Error from '../components/Error';
-import { URL_API } from '../consts';
-import { useParams } from "react-router-dom";
 import axios from 'axios';
 import FooterFilm from '../components/FooterFilm';
 import Seat from '../components/Seat';
+import InputsBuyer from '../components/InputsBuyer'
+
+let buyers = [];
 
 export default function Seats() {
 
-    const [seatsInfo, setSeatsInfo] = useState(null);
+    const [seatsList, setSeatsList] = useState(null);
+    const [footerInfo, setFooterInfo] = useState([]);
+
     const { idShowtime } = useParams();
 
     useEffect(() => {
-        axios.get(`${URL_API}/showtimes/${idShowtime}/seats`)
-            .then((response) => {
-                console.log(response.data);
-                setSeatsInfo(response.data);
-            })
-            .catch(() => {
-                setSeatsInfo([]);
-            });
+        const promise = axios.get(`${URL_API}/showtimes/${idShowtime}/seats`);
+        promise.then((response) => {
+            const seats = response.data.seats.map((e) => e);
+            setFooterInfo(response.data);
+            setSeatsList(seats);
+        });
+        promise.catch(() => {
+            setSeatsList([]);
+        });
     }, []);
 
-    if (seatsInfo === null) return <Loading />;
-    else if (seatsInfo.length === 0) return <Error />;
+    if (seatsList === null) return <Loading />;
+    else if (seatsList.length === 0) return <Error />;
+
+    const selectSeat = (index) => {
+        const stateSeat = seatsList[index].isAvailable;
+
+        if (stateSeat === false) {
+            alert("Esse assento não está disponível.")
+            return;
+        };
+        if (stateSeat) seatsList[index].isAvailable = null;
+        else seatsList[index].isAvailable = true;
+
+        setSeatsList([...seatsList])
+    }
+
+    const selectedSeats = seatsList.filter((e) => e.isAvailable === null);
+
+    const sendReservation = () => {
+        console.log(selectedSeats);
+        const objectReservation = {
+            ids: selectedSeats.map((e) => e.id),
+            compradores: buyers
+        }
+        return objectReservation;
+    }
+
+    const updateBuyers = (index, idAssento, name, CPF) => {
+        const object = { idAssento: idAssento, nome: name, cpf: CPF }
+
+        if (buyers.indexOf[index] === -1) buyers.push(object);
+        else buyers[index] = object;
+        console.log(buyers);
+    }
 
     return (
-        <>
+        <Container>
             <TitlePage>Selecione o(s) assentos(s)</TitlePage>
+
             <ContainerSeats>
-                {seatsInfo.seats.map(({ name, isAvailable }, index) =>
-                    <Seat key={index} available={isAvailable}>{name}</Seat>
+                {seatsList.map(({ id, name, isAvailable }, index) =>
+                    <li key={index} onClick={() => selectSeat(index)}>
+                        <Seat id={id} available={isAvailable}>
+                            {name}
+                        </Seat>
+                    </li>
                 )}
             </ContainerSeats>
+
             <ContainerOptions>
                 <Seat available={null} showText />
                 <Seat available={true} showText />
                 <Seat available={false} showText />
             </ContainerOptions>
-            <FooterFilm film={seatsInfo} />
-        </>
+
+            {selectedSeats.map((e, index) => (
+                <InputsBuyer key={index} index={index} seat={e} updateBuyers={updateBuyers} />
+            ))}
+
+            {(selectedSeats.length > 0) ?
+                <ButtonReservation>
+                    <Link
+                        to={{
+                            pathname: "/sucesso",
+                            state: {
+                                objectReservation: sendReservation(),
+                                filmInfo: footerInfo,
+                                seatsInfo: selectedSeats
+                            },
+                        }}>
+                        Reservar assento(s)
+                    </Link>
+                </ButtonReservation> : ""}
+
+            <FooterFilm film={footerInfo} />
+        </Container>
     );
 }
 
-const ContainerSeats = styled.div`
+const ContainerSeats = styled.ul`
     width: 350px;
     height: 210px;
     display: flex;
@@ -55,14 +119,13 @@ const ContainerSeats = styled.div`
     flex-wrap: wrap;
     margin: 0 auto;
     li {
-        margin: 5px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         font-size: 13px;
     }
-`
+`;
 
 const ContainerOptions = styled(ContainerSeats)`
     height: auto;
@@ -70,8 +133,17 @@ const ContainerOptions = styled(ContainerSeats)`
     justify-content: space-around;
     padding: 0 10%;
     margin-top: 5px;
-    p {
-        margin-top: 7px;
-        color:#4E5A65;
-    }
 `;
+
+const ButtonReservation = styled(Button)`
+    margin-top: 40px;
+    max-width: 250px;
+`
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    margin-bottom: 150px;
+`
