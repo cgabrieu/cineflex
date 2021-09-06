@@ -16,7 +16,6 @@ export default function Showtimes() {
     useEffect(() => {
         axios.get(`${URL_API}/movies/${idMovie}/showtimes`)
             .then((response) => {
-                console.log(response.data);
                 setShowtimesInfo(response.data);
             })
             .catch(() => {

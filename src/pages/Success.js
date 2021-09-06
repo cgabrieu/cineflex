@@ -38,7 +38,6 @@ export default function Success() {
                 ))}
             </div>
             <div>
-                {console.log(objectReservation)}
                 <TitleSection>Compradores</TitleSection>
                 {objectReservation.compradores.map((e, index) => (
                     <div key={index}>

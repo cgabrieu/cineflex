@@ -49,8 +49,7 @@ export default function Seats() {
 
     const selectedSeats = seatsList.filter((e) => e.isAvailable === null);
 
-    const sendReservation = () => {
-        console.log(selectedSeats);
+    const getReservationObject = () => {
         const objectReservation = {
             ids: selectedSeats.map((e) => e.id),
             compradores: buyers
@@ -63,7 +62,6 @@ export default function Seats() {
 
         if (buyers.indexOf[index] === -1) buyers.push(object);
         else buyers[index] = object;
-        console.log(buyers);
     }
 
     return (
@@ -85,18 +83,18 @@ export default function Seats() {
                 <Seat available={true} showText />
                 <Seat available={false} showText />
             </ContainerOptions>
-
+            <br />
             {selectedSeats.map((e, index) => (
-                <InputsBuyer key={index} index={index} seat={e} updateBuyers={updateBuyers} />
+                <InputsBuyer key={index} index={index} seat={e} updateBuyers={updateBuyers}/>
             ))}
-
+            
             {(selectedSeats.length > 0) ?
                 <ButtonReservation>
                     <Link
                         to={{
                             pathname: "/sucesso",
                             state: {
-                                objectReservation: sendReservation(),
+                                objectReservation: getReservationObject(),
                                 filmInfo: footerInfo,
                                 seatsInfo: selectedSeats
                             },

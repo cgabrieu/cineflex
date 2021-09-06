@@ -38,7 +38,7 @@ function App() {
 const GlobalStyle = createGlobalStyle`
 	body {
 		font-family: "Roboto", sans-serif;
-		background-color: #E5E5E5;
+		background-color: #FFF;
 	}
 	h1, h2 {
 		color:#293845;

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import React, { useState } from 'react';
+import { cpfMask } from './CPFMask'
 
 export default function InputsBuyer({seat, index, updateBuyers}) {
     const [name, setName] = useState("");
@@ -8,24 +9,28 @@ export default function InputsBuyer({seat, index, updateBuyers}) {
     updateBuyers(index, seat.id, name, CPF);
 
     return (
-        <>
-            <ContainerInput>
-                <h3>{`${index+1}º Ingresso`}</h3>
-                <p>Nome do comprador: </p>
-                <input 
-                    placeholder="Digite seu nome..."
-                    onChange= {(e) => setName(e.target.value)}
-                    value={name}
-                />
-                <p>CPF do comprador: </p>
-                <input 
-                    placeholder="Digite seu CPF..."
-                    onChange= {(e) => setCPF(e.target.value)}
-                    pattern = "[0-9]{11}"
-                    value={CPF}
-                />
-            </ContainerInput>
-        </>
+        <ContainerInput>
+            <h3>{`${index+1}º Ingresso`}</h3>
+            <p>Nome do comprador: </p>
+            <input
+                placeholder="Digite seu nome..."
+                onChange= {(e) => {
+                    setName(e.target.value)
+                }}
+                maxLength='35'
+                minLength='5'
+                value={name}
+            />
+            <p>CPF do comprador: </p>
+            <input
+                placeholder="Digite seu CPF..."
+                onChange= {(e) => {
+                    if(e.target.value.length > 14) return;
+                    setCPF(e.target.value);
+                }}
+                value={cpfMask(CPF)}
+            />
+        </ContainerInput>
     );
 }
 
@@ -38,13 +43,19 @@ const ContainerInput = styled.div`
         text-align: center;
         color:#293845;
         margin: 20px 0 10px 0;
+
+    }
+    input:invalid {
+        border:1px solid red;
+        background-color: #Fec4c6;
     }
     input {
         width: 100%;
         height: 50px;
         outline: none;
-        padding-left: 15px;
+        border: 1px solid #D5D5D5;
         border-radius: 3px;
+        padding-left: 15px;
         &::placeholder {
             color: #AFAFAF;
             font-size: 18px;
