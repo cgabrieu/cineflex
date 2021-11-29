@@ -10,13 +10,14 @@ export default function Topbar() {
   return (
     <Header>
       <GoBackIcon color="#ff9505" onClick={() => navigate(-1)} />
-      <CineflexLogo />
+      <CineflexLogo onClick={() => navigate("/")}/>
     </Header>
   );
 }
 
 const CineflexLogo = styled(Cineflex)`
   width: 200px;
+  cursor: pointer;
 `;
 
 const GoBackIcon = styled(IoArrowBack)`

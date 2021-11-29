@@ -1,22 +1,18 @@
-import styled from 'styled-components';
-import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
-import Loading from '../components/Loading';
-import Error from '../components/Error';
-import { TitlePage } from '../assets/styles/styles';
-import { getMovies } from '../services/api/api';
-
+import styled from "styled-components";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Loading from "../components/Loading";
+import Error from "../components/Error";
+import { TitlePage } from "../assets/styles/styles";
+import { getMovies } from "../services/api/api";
 
 export default function Movies() {
-
   const [listMovies, setListMovies] = useState(null);
 
   useEffect(() => {
-    getMovies().then((res) => {
-        setListMovies(res.data);
-      }).catch(() => {
-        setListMovies([])
-      });
+    getMovies()
+      .then((res) => setListMovies(res.data))
+      .catch(() => setListMovies([]));
   }, []);
 
   if (listMovies === null) return <Loading />;
@@ -26,19 +22,27 @@ export default function Movies() {
     <>
       <TitlePage>Selecione o filme</TitlePage>
       <ListMovies>
-        {listMovies.map((movie, index) => <Movie key={index} movie={movie} />)}
+        {listMovies.map((movie, index) => (
+          <Movie key={index} movie={movie} />
+        ))}
       </ListMovies>
     </>
   );
-
 }
 
-const Movie = ({ movie }) =>
-  <Card>
-    <Link to={"/filme/" + movie.id}>
-      <img src={movie.posterURL} alt={movie.title} />
-    </Link>
-  </Card>;
+const Movie = ({ movie }) => {
+  const navigate = useNavigate();
+  console.log(movie.id);
+  return (
+    <Card>
+      <ImageMovie
+        src={movie.posterURL}
+        alt={movie.title}
+        onClick={() => navigate(`/filme/${movie.id}`)}
+      />
+    </Card>
+  );
+};
 
 const ListMovies = styled.div`
   width: 100%;
@@ -53,11 +57,13 @@ const Card = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 1px 5px 1px #FF9505;
-  margin: 10px 15px;
+  box-shadow: 0px 1px 5px 1px #ff9505;
+  margin: 10px;
   border-radius: 3px;
   background-color: #c3cfd9;
-  img {
-    width: 130px;
-  }
+  cursor: pointer;
+`;
+
+const ImageMovie = styled.img`
+  width: 134px;
 `;
