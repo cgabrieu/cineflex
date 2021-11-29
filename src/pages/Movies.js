@@ -48,6 +48,7 @@ const ListMovies = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  animation: opacity 1s;
 `;
 
 const Card = styled.div`

@@ -45,6 +45,8 @@ export const GlobalStyle = createGlobalStyle`
 	body {
 		font-family: "Roboto", sans-serif;
 		background-color: #0d1c32;
+    overflow: scroll;
+    overflow-x: hidden;
 	}
 	h1, h2 {
 		color:#FF9505;
@@ -55,7 +57,16 @@ export const GlobalStyle = createGlobalStyle`
     color:#FF9505;
     font-weight: bold;
   }
+
+  ::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
   
+  ::-webkit-scrollbar-thumb {
+      background: #FF0000;
+  }
+
   @keyframes moveToUpFooter {
     0% {
       transform: translateY(300px);
