@@ -56,6 +56,7 @@ const ContainerShowtimes = styled.div`
   max-width: 500px;
   margin: 0 auto;
   margin-bottom: 150px;
+  animation: opacityScale 1s;
 `;
 
 const ContainerShowtime = styled.div`

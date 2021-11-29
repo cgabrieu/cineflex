@@ -77,13 +77,15 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
-  @keyframes opacity {
+  @keyframes opacityScale {
     0% {
       opacity: 0;
+      transform: scale(0.93);
     }
 
     100% {
       opacity: 1;
+      transform: scale(1);
     }
   }
 `;
