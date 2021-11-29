@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import { TitlePage, Button, Container } from '../assets/styles/styles';
-import { URL_API } from '../consts';
 import { useParams, Link } from "react-router-dom";
 import Loading from '../components/Loading';
 import Error from '../components/Error';
-import axios from 'axios';
 import FooterFilm from '../components/FooterFilm';
 import Seat from '../components/Seat';
 import InputsBuyer from '../components/InputsBuyer'

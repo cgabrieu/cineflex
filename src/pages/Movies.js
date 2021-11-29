@@ -26,7 +26,7 @@ export default function Movies() {
     <>
       <TitlePage>Selecione o filme</TitlePage>
       <ListMovies>
-        {listMovies.map((e, index) => <li key={index}> <Movie movie={e} /> </li>)}
+        {listMovies.map((movie, index) => <Movie key={index} movie={movie} />)}
       </ListMovies>
     </>
   );
@@ -40,7 +40,7 @@ const Movie = ({ movie }) =>
     </Link>
   </Card>;
 
-const ListMovies = styled.ul`
+const ListMovies = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
@@ -53,10 +53,10 @@ const Card = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.1);
-  margin: 5px 15px;
+  box-shadow: 0px 1px 5px 1px #FF9505;
+  margin: 10px 15px;
   border-radius: 3px;
-
+  background-color: #c3cfd9;
   img {
     width: 130px;
   }

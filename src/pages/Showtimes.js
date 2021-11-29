@@ -1,8 +1,6 @@
 import styled from "styled-components";
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { TitlePage, Button } from "../assets/styles/styles";
-import { URL_API } from "../consts";
 import { useParams, Link } from "react-router-dom";
 import Loading from "../components/Loading";
 import Error from "../components/Error";

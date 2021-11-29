@@ -38,9 +38,11 @@ export const Container = styled.div`
 export const GlobalStyle = createGlobalStyle`
 	body {
 		font-family: "Roboto", sans-serif;
-		background-color: #FFF;
+		background-color: #0d1c32;
 	}
 	h1, h2 {
-		color:#293845;
+		color:#FF9505;
+    text-transform: uppercase;
+    font-weight: bold;
 	}
 `;
