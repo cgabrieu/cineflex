@@ -8,11 +8,14 @@ export function getMovies() {
   return api.get("/movies");
 }
 
-export function getShowtimes(movieId){
-    return api.get(`/movies/${movieId}/showtimes`);
+export function getShowtimes(movieId) {
+  return api.get(`/movies/${movieId}/showtimes`);
 }
 
+export function getSeats(showtimeId) {
+  return api.get(`/showtimes/${showtimeId}/seats`);
+}
 
-export function getSeats(showtimeId){
-    return api.get(`/showtimes/${showtimeId}/seats`);
+export function postSeat(objectReservation) {
+  return api.post("/seats/book-many", objectReservation);
 }

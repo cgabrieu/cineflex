@@ -6,6 +6,7 @@ import axios from 'axios';
 import Loading from '../components/Loading';
 import Error from '../components/Error';
 import { TitlePage, Button } from '../assets/styles/styles';
+import { postSeat } from '../services/api/api';
 
 export default function Success() {
 
@@ -13,7 +14,7 @@ export default function Success() {
     const [isSent, setIsSent] = useState(null);
   
     useEffect(() => {
-      axios.post(URL_API + "/seats/book-many", objectReservation)
+      postSeat(objectReservation)
         .then(() => setIsSent(true))
         .catch(() => setIsSent(false));
     }, []);
