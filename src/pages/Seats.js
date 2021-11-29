@@ -9,24 +9,22 @@ import axios from 'axios';
 import FooterFilm from '../components/FooterFilm';
 import Seat from '../components/Seat';
 import InputsBuyer from '../components/InputsBuyer'
+import { getSeats } from '../services/api/api';
 
 let buyers = [];
 
 export default function Seats() {
-
     const [seatsList, setSeatsList] = useState(null);
     const [footerInfo, setFooterInfo] = useState([]);
 
-    const { idShowtime } = useParams();
+    const { showtimeId } = useParams();
 
     useEffect(() => {
-        const promise = axios.get(`${URL_API}/showtimes/${idShowtime}/seats`);
-        promise.then((response) => {
-            const seats = response.data.seats.map((e) => e);
-            setFooterInfo(response.data);
+        getSeats(showtimeId).then((res) => {
+            const seats = res.data.seats.map((seat) => seat);
+            setFooterInfo(res.data);
             setSeatsList(seats);
-        });
-        promise.catch(() => {
+        }).catch(() => {
             setSeatsList([]);
         });
     }, []);
@@ -38,7 +36,7 @@ export default function Seats() {
         const stateSeat = seatsList[index].isAvailable;
 
         if (stateSeat === false) {
-            alert("Esse assento não está disponível.")
+            alert("Esse assento não está disponível.");
             return;
         };
         if (stateSeat) seatsList[index].isAvailable = null;
@@ -136,4 +134,4 @@ const ContainerOptions = styled(ContainerSeats)`
 const ButtonReservation = styled(Button)`
     margin-top: 40px;
     max-width: 250px;
-`
+`;

@@ -11,3 +11,8 @@ export function getMovies() {
 export function getShowtimes(movieId){
     return api.get(`/movies/${movieId}/showtimes`);
 }
+
+
+export function getSeats(showtimeId){
+    return api.get(`/showtimes/${showtimeId}/seats`);
+}
