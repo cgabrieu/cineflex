@@ -16,6 +16,7 @@ export default function Topbar() {
 
 const CineflexLogo = styled(Cineflex)`
   width: 200px;
+  height: 130px;
   cursor: pointer;
   @media (max-width: 330px) {
     width: 100px;
@@ -32,7 +33,6 @@ const GoBackIcon = styled(IoArrowBack)`
   cursor: pointer;
   &:hover {
     background-color: #000;
-    
   }
 `;
 

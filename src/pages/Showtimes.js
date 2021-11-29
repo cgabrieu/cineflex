@@ -1,19 +1,26 @@
 import styled from "styled-components";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { TitlePage, Button } from "../assets/styles/styles";
 import { useParams, useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
-import FooterFilm from "../components/FooterFilm";
 import { getShowtimes } from "../services/api/api";
+import { BookingContext } from "../contexts/bookingContext";
 
 export default function Showtimes() {
   const [showtimesInfo, setShowtimesInfo] = useState(null);
   const { movieId } = useParams();
 
+  const { setBooking } = useContext(BookingContext);
+
   useEffect(() => {
     getShowtimes(movieId)
-      .then((res) => setShowtimesInfo(res.data))
+      .then((res) => {
+        setShowtimesInfo(res.data);
+        setBooking({
+          showtimes: res.data
+        });
+      })
       .catch(() => setShowtimesInfo([]));
   }, []);
 
@@ -33,13 +40,13 @@ export default function Showtimes() {
           />
         ))}
       </ContainerShowtimes>
-      <FooterFilm film={showtimesInfo} />
     </>
   );
 }
 
 const Showtime = ({ weekday, date, showtimes }) => {
   const navigate = useNavigate();
+
   return (
     <ContainerShowtime>
       <DayInfoShowtime>{weekday + " - " + date}</DayInfoShowtime>
