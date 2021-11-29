@@ -1,59 +1,85 @@
-import styled from 'styled-components';
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-import { TitlePage, Button } from '../styles';
-import { URL_API } from '../consts';
-import { useParams, Link } from "react-router-dom";
-import Loading from '../components/Loading';
-import Error from '../components/Error';
-import FooterFilm from '../components/FooterFilm';
+import styled from "styled-components";
+import React, { useState, useEffect, useContext } from "react";
+import { TitlePage, Button } from "../assets/styles/styles";
+import { useParams, useNavigate } from "react-router-dom";
+import Loading from "../components/Loading";
+import Error from "../components/Error";
+import { getShowtimes } from "../services/api/api";
+import { BookingContext } from "../contexts/bookingContext";
 
 export default function Showtimes() {
+  const [showtimesInfo, setShowtimesInfo] = useState(null);
+  const { movieId } = useParams();
 
-    const [showtimesInfo, setShowtimesInfo] = useState(null);
-    const { idMovie } = useParams();
+  const { setBooking } = useContext(BookingContext);
 
-    useEffect(() => {
-        axios.get(`${URL_API}/movies/${idMovie}/showtimes`)
-            .then((response) => {
-                setShowtimesInfo(response.data);
-            })
-            .catch(() => {
-                setShowtimesInfo([]);
-            });
-    }, []);
+  useEffect(() => {
+    getShowtimes(movieId)
+      .then((res) => {
+        setShowtimesInfo(res.data);
+        setBooking({
+          movie: res.data
+        });
+      })
+      .catch(() => setShowtimesInfo([]));
+  }, []);
 
-    if (showtimesInfo === null) return <Loading />;
-    else if (showtimesInfo.length === 0) return <Error />;
+  if (showtimesInfo === null) return <Loading />;
+  else if (showtimesInfo.length === 0) return <Error />;
 
-    return (
-        <>
-            <TitlePage>Selecione o horário</TitlePage>
-            {showtimesInfo.days.map((e, index) => <Showtime key={index} weekday={e.weekday} date={e.date} showtimes={e.showtimes} /> )}
-            <FooterFilm film={showtimesInfo}/>
-        </>
-    );
+  return (
+    <>
+      <TitlePage>Selecione o horário</TitlePage>
+      <ContainerShowtimes>
+        {showtimesInfo.days.map((e, index) => (
+          <Showtime
+            key={index}
+            weekday={e.weekday}
+            date={e.date}
+            showtimes={e.showtimes}
+          />
+        ))}
+      </ContainerShowtimes>
+    </>
+  );
 }
 
+const Showtime = ({ weekday, date, showtimes }) => {
+  const navigate = useNavigate();
 
-const Showtime = ({ weekday, date, showtimes }) => (
+  return (
     <ContainerShowtime>
-        <DayInfoShowtime>{weekday + " - " + date}</DayInfoShowtime>
-        {showtimes.map(({ name: time, id }, index) =>
-            <Button key={index}>
-                <Link to={"/assentos/" + id}>
-                    {time}
-                </Link>
-            </Button>
-        )}
+      <DayInfoShowtime>{weekday + " - " + date}</DayInfoShowtime>
+      {showtimes.map(({ name: time, id }, index) => (
+        <Button key={index} onClick={() => navigate(`/assentos/${id}`)}>
+          {time}
+        </Button>
+      ))}
     </ContainerShowtime>
-);
+  );
+};
+
+const ContainerShowtimes = styled.div`
+  max-width: 500px;
+  margin: 0 auto;
+  margin-bottom: 150px;
+  animation: opacityScale 1s;
+`;
 
 const ContainerShowtime = styled.div`
-    margin: 0 0 25px 25px;
-`
+  margin: 0 auto;
+  margin-bottom: 25px;
+  background-color: #000;
+  max-width: 280px;
+  padding: 15px 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 7px;
+  box-shadow: 0px 0px 8px 0px #ff9505;
+`;
 
 const DayInfoShowtime = styled.h2`
-    font-size: 20px;
-    margin-bottom: 20px;
-`
+  font-size: 18px;
+  margin-bottom: 15px;
+`;
