@@ -18,14 +18,16 @@ export const ContainerCenter = styled.div`
 `;
 
 export const Button = styled.button`
-    background-color: #E8833A;
+    background-color: #0d1c32;
     margin-right: 10px;
-    color: #FFF;
+    color: #ff9505;
     border: none;
     font-size: 18px;
     border-radius: 3px;
     padding: 10px 20px;
     margin-top: 7px;
+    width: 150px;
+    cursor: pointer;
 `;
 
 export const Container = styled.div`

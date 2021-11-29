@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React, { useState, useEffect } from "react";
 import { TitlePage, Button } from "../assets/styles/styles";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 import FooterFilm from "../components/FooterFilm";
@@ -38,20 +38,24 @@ export default function Showtimes() {
   );
 }
 
-const Showtime = ({ weekday, date, showtimes }) => (
-  <ContainerShowtime>
-    <DayInfoShowtime>{weekday + " - " + date}</DayInfoShowtime>
-    {showtimes.map(({ name: time, id }, index) => (
-      <Button key={index}>
-        <Link to={"/assentos/" + id}>{time}</Link>
-      </Button>
-    ))}
-  </ContainerShowtime>
-);
+const Showtime = ({ weekday, date, showtimes }) => {
+  const navigate = useNavigate();
+  return (
+    <ContainerShowtime>
+      <DayInfoShowtime>{weekday + " - " + date}</DayInfoShowtime>
+      {showtimes.map(({ name: time, id }, index) => (
+        <Button key={index} onClick={() => navigate(`/assentos/${id}`)}>
+          {time}
+        </Button>
+      ))}
+    </ContainerShowtime>
+  );
+};
 
 const ContainerShowtimes = styled.div`
   max-width: 500px;
   margin: 0 auto;
+  margin-bottom: 150px;
 `;
 
 const ContainerShowtime = styled.div`
