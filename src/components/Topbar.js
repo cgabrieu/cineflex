@@ -17,16 +17,23 @@ export default function Topbar() {
 const CineflexLogo = styled(Cineflex)`
   width: 200px;
   cursor: pointer;
+  @media (max-width: 330px) {
+    width: 100px;
+  }
 `;
 
 const GoBackIcon = styled(IoArrowBack)`
   font-size: 45px;
   position: absolute;
   top: 10px;
-  left: 5px;
-  background-color: #fff;
+  left: 15px;
+  background-color: #0D1C32;
   border-radius: 5px;
   cursor: pointer;
+  &:hover {
+    background-color: #000;
+    
+  }
 `;
 
 const Header = styled.div`
@@ -39,5 +46,5 @@ const Header = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 0px 23px 0px #ff9505;
+  box-shadow: 0px 0px 15px 0px #ff9505;
 `;
