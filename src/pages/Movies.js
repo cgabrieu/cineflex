@@ -32,7 +32,6 @@ export default function Movies() {
 
 const Movie = ({ movie }) => {
   const navigate = useNavigate();
-  console.log(movie.id);
   return (
     <Card>
       <ImageMovie

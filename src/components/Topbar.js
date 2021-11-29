@@ -2,14 +2,13 @@ import styled from "styled-components";
 import { IoArrowBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as Cineflex } from "../assets/icons/cineflex-logo.svg";
+import { useLocation } from "react-router-dom";
 
 export default function Topbar() {
-
   const navigate = useNavigate();
-
   return (
     <Header>
-      <GoBackIcon color="#ff9505" onClick={() => navigate(-1)} />
+      {(useLocation().pathname !== '/') && <GoBackIcon color="#ff9505" onClick={() => navigate(-1)} />}
       <CineflexLogo onClick={() => navigate("/")}/>
     </Header>
   );

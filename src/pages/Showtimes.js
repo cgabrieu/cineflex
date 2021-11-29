@@ -12,7 +12,6 @@ export default function Showtimes() {
   const { movieId } = useParams();
 
   useEffect(() => {
-    console.log(movieId);
     getShowtimes(movieId)
       .then((res) => setShowtimesInfo(res.data))
       .catch(() => setShowtimesInfo([]));
