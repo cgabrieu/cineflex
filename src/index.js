@@ -16,8 +16,8 @@ function App() {
       <Topbar />
       <Routes>
         <Route path="/" element={<Movies />} />
-        <Route path="/filme/:idMovie" element={<Showtimes />} />
-        <Route path="/assentos/:idShowtime" element={<Seats />} />
+        <Route path="/filme/:movieId" element={<Showtimes />} />
+        <Route path="/assentos/:showtimeId" element={<Seats />} />
         <Route path="/sucesso" element={<Success />} />
         <Route path="*" element={<Error />} />
       </Routes>
