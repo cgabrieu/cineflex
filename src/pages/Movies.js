@@ -1,21 +1,20 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import axios from 'axios';
 import Loading from '../components/Loading';
 import Error from '../components/Error';
 import { TitlePage } from '../assets/styles/styles';
+import { getMovies } from '../services/api/api';
+
 
 export default function Movies() {
 
   const [listMovies, setListMovies] = useState(null);
 
   useEffect(() => {
-    axios.get(URL_API + "/movies")
-      .then(response => {
-        setListMovies(response.data);
-      })
-      .catch(() => {
+    getMovies().then((res) => {
+        setListMovies(res.data);
+      }).catch(() => {
         setListMovies([])
       });
   }, []);
