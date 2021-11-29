@@ -4,7 +4,7 @@ import { createGlobalStyle } from 'styled-components';
 export const TitlePage = styled.h1`
   text-align: center;
   font-size: 24px;
-  margin-top: calc(10% + 64px);
+  margin-top: 130px;
   margin-bottom: 36px;
 `;
 
@@ -25,6 +25,7 @@ export const Button = styled.button`
     font-size: 18px;
     border-radius: 3px;
     padding: 10px 20px;
+    margin-top: 7px;
 `;
 
 export const Container = styled.div`
