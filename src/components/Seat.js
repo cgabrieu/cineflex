@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Seat = ({ available, showText, children }) => {
+const Seat = ({ available, showText, children: name }) => {
     let color = "#C3CFD9";
     let borderColor = "#808F9D";
     let text = "Disponível"
@@ -17,7 +17,7 @@ const Seat = ({ available, showText, children }) => {
 
     return (
         <SeatStyle color={color} borderColor={borderColor}>
-            {children}
+            {name}
             {showText && <p>{text}</p>}
         </SeatStyle>
     );

@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Loading from '../components/Loading';
 import Error from '../components/Error';
-import { TitlePage, Button } from '../styles';
+import { TitlePage, Button } from '../assets/styles/styles';
 
 export default function Success() {
 

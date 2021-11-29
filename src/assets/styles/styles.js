@@ -1,13 +1,14 @@
 import styled from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
-const TitlePage = styled.h1`
+export const TitlePage = styled.h1`
   text-align: center;
   font-size: 24px;
   margin-top: calc(10% + 64px);
   margin-bottom: 36px;
 `;
 
-const ContainerCenter = styled.div`
+export const ContainerCenter = styled.div`
   position: absolute;
 	top: 0; bottom: 0; right: 0; left: 0;
 	display: flex;
@@ -16,7 +17,7 @@ const ContainerCenter = styled.div`
 	align-items: center;
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
     background-color: #E8833A;
     margin-right: 10px;
     color: #FFF;
@@ -26,17 +27,20 @@ const Button = styled.button`
     padding: 10px 20px;
 `;
 
-const Container = styled.div`
+export const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-items: center;
     align-items: center;
     margin-bottom: 150px;
-`
+`;
 
-export {
-    TitlePage,
-    ContainerCenter,
-    Button,
-    Container,
-}
+export const GlobalStyle = createGlobalStyle`
+	body {
+		font-family: "Roboto", sans-serif;
+		background-color: #FFF;
+	}
+	h1, h2 {
+		color:#293845;
+	}
+`;

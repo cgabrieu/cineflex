@@ -1,5 +1,5 @@
 import { ReactComponent as ErrorLogo } from '../assets/error.svg';
-import { ContainerCenter } from '../styles';
+import { ContainerCenter } from '../assets/styles/styles';
 
 const Error = () => (
 	<ContainerCenter>

@@ -1,5 +1,5 @@
 import { ReactComponent as LoadingLogo } from '../assets/loading.svg';
-import { ContainerCenter } from '../styles';
+import { ContainerCenter } from '../assets/styles/styles';
 
 const Loading = () => (
 	<ContainerCenter>

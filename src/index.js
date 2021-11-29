@@ -1,6 +1,5 @@
-import "./reset.css";
+import "./assets/styles/reset.css";
 import ReactDOM from 'react-dom';
-import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Topbar from './components/Topbar'
 import Movies from "./pages/Movies";
@@ -8,6 +7,7 @@ import Showtimes from "./pages/Showtimes";
 import Seats from "./pages/Seats"
 import Error from "./components/Error";
 import Success from "./pages/Success";
+import { GlobalStyle } from "./assets/styles/styles.js";
 
 function App() {
 	return (
@@ -34,15 +34,5 @@ function App() {
 		</Router>
 	);
 }
-
-const GlobalStyle = createGlobalStyle`
-	body {
-		font-family: "Roboto", sans-serif;
-		background-color: #FFF;
-	}
-	h1, h2 {
-		color:#293845;
-	}
-`
 
 ReactDOM.render(<App />, document.querySelector(".root"));
