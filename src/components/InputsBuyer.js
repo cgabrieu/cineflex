@@ -24,10 +24,8 @@ export default function InputsBuyer({seat, index, updateBuyers}) {
             <p>CPF do comprador: </p>
             <input
                 placeholder="Digite seu CPF..."
-                onChange= {(e) => {
-                    if(e.target.value.length > 14) return;
-                    setCPF(e.target.value);
-                }}
+                onChange= {(e) => setCPF(e.target.value)}
+                maxLength={14}
                 value={cpfMask(CPF)}
             />
         </ContainerInput>
@@ -41,13 +39,12 @@ const ContainerInput = styled.div`
     h3 {
         font-size: 20px;
         text-align: center;
-        color:#293845;
-        margin: 20px 0 10px 0;
+        color:#ff9505;
+        margin-bottom: 0px;
 
     }
     input:invalid {
         border:1px solid red;
-        background-color: #Fec4c6;
     }
     input {
         width: 100%;
@@ -63,7 +60,7 @@ const ContainerInput = styled.div`
     }
     p {
         font-size: 18px;
-        color:#293845;
+        color:#ff9505;
         margin: 7px 0 3px 0;
     }
 `

@@ -18,7 +18,7 @@ export default function Showtimes() {
       .then((res) => {
         setShowtimesInfo(res.data);
         setBooking({
-          showtimes: res.data
+          movie: res.data
         });
       })
       .catch(() => setShowtimesInfo([]));

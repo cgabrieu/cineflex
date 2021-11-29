@@ -39,6 +39,13 @@ export const Container = styled.div`
   justify-items: center;
   align-items: center;
   margin-bottom: 150px;
+  > div {
+    background-color: black;
+    padding: 10px 10px 25px 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 0px #ff9505;
+    margin-bottom: 25px;
+  }
 `;
 
 export const GlobalStyle = createGlobalStyle`

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { TitlePage, Button, Container } from "../assets/styles/styles";
 import { useParams, useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
@@ -8,22 +8,25 @@ import FooterFilm from "../components/FooterFilm";
 import Seat from "../components/Seat";
 import InputsBuyer from "../components/InputsBuyer";
 import { getSeats } from "../services/api/api";
+import { BookingContext } from "../contexts/bookingContext";
 
 let buyers = [];
 
 export default function Seats() {
   const [seatsList, setSeatsList] = useState(null);
-  const [footerInfo, setFooterInfo] = useState([]);
 
   const { showtimeId } = useParams();
-
   const navigate = useNavigate();
+  const { booking, setBooking } = useContext(BookingContext);
 
   useEffect(() => {
     getSeats(showtimeId)
       .then((res) => {
         const seats = res.data.seats.map((seat) => seat);
-        setFooterInfo(res.data);
+        setBooking({
+          ...booking,
+          showtime: res.data,
+        });
         setSeatsList(seats);
       })
       .catch(() => {
@@ -49,12 +52,12 @@ export default function Seats() {
 
   const selectedSeats = seatsList.filter((e) => e.isAvailable === null);
 
-  const getReservationObject = () => {
+  /*   const getReservationObject = () => {
     return {
       ids: selectedSeats.map((e) => e.id),
       compradores: buyers,
     };
-  };
+  }; */
 
   const updateBuyers = (index, idAssento, name, CPF) => {
     const object = { idAssento: idAssento, nome: name, cpf: CPF };
@@ -66,7 +69,9 @@ export default function Seats() {
   return (
     <Container>
       <TitlePage>Selecione o(s) assentos(s)</TitlePage>
-
+    
+        <div>
+      <ScreenContainer>TELA</ScreenContainer>
       <ContainerSeats>
         {seatsList.map(({ id, name, isAvailable }, index) => (
           <li key={index} onClick={() => selectSeat(index)}>
@@ -82,6 +87,7 @@ export default function Seats() {
         <Seat available={true} showText />
         <Seat available={false} showText />
       </ContainerOptions>
+      </div>
       <br />
       {selectedSeats.map((e, index) => (
         <InputsBuyer
@@ -102,6 +108,20 @@ export default function Seats() {
     </Container>
   );
 }
+
+const ScreenContainer = styled.div`
+  width: 345px;
+  height: 15px;
+  margin-bottom: 5px;
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  border-radius: 3px;
+`;
 
 const ContainerSeats = styled.ul`
   width: 350px;
@@ -131,6 +151,8 @@ const ContainerOptions = styled(ContainerSeats)`
 `;
 
 const ButtonReservation = styled(Button)`
-  margin-top: 40px;
-  max-width: 250px;
+  margin-top: 10px;
+  width: 210px;
+  background-color: #000;
+  box-shadow: 0px 0px 5px 0px #ff9505;
 `;

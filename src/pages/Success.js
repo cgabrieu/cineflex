@@ -10,7 +10,7 @@ export default function Success() {
   const [isSent, setIsSent] = useState(null);
 
   useEffect(() => {
-    postSeat(objectReservation)
+    postSeat()
       .then(() => setIsSent(true))
       .catch(() => setIsSent(false));
   }, []);
@@ -24,25 +24,25 @@ export default function Success() {
       <ContainerSuccess>
         <div>
           <TitleSection>Filme e sessão</TitleSection>
-          {filmInfo.movie.title}
+          TITULO DO FILME
           <br />
-          {filmInfo.day.date} {filmInfo.name}
+          DATA - NOME DA SESSAO
         </div>
         <div>
           <TitleSection>Ingressos</TitleSection>
-          {seatsInfo.map((e, index) => (
+          {/* {seatsInfo.map((e, index) => (
             <p key={index}>{`Assento ${e.name}`}</p>
-          ))}
+          ))} */}
         </div>
         <div>
           <TitleSection>Compradores</TitleSection>
-          {objectReservation.compradores.map((e, index) => (
+          {/* {objectReservation.compradores.map((e, index) => (
             <div key={index}>
               <h2>Comprador {index + 1}</h2>
               <p>Nome: {e.nome}</p>
               <p>CPF: {e.cpf}</p>
             </div>
-          ))}
+          ))} */}
         </div>
         <div>
           <Link to="/">

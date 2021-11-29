@@ -3,30 +3,22 @@ import styled from "styled-components";
 import { BookingContext } from "../contexts/bookingContext";
 
 export default function FooterFilm() {
+  const { booking } = useContext(BookingContext);
 
-    const { booking, setBooking } = useContext(BookingContext);
+  const { movie, showtime } = booking;
+  
+  console.log(booking);
 
   return (
     <Footer>
-      {film.movie === undefined ? (
-        <>
-          <Card>
-            <ImageMovie src={film.posterURL} alt={film.title} />
-          </Card>
-          <h3>{film.title}</h3>
-        </>
-      ) : (
-        <>
-          <Card>
-            <ImageMovie src={film.movie.posterURL} alt={film.movie.title} />
-          </Card>
-          <h3>
-            {film.movie.title}
-            <br />
-            {film.day.weekday + " - " + film.name}
-          </h3>
-        </>
-      )}
+      <Card>
+        <ImageMovie src={movie.posterURL} alt={movie.title} />
+      </Card>
+      <h3>
+        {movie.title}
+        <br />
+        {showtime && `${showtime.day.weekday} - ${showtime.name}`}
+      </h3>
     </Footer>
   );
 }
@@ -46,7 +38,8 @@ const Footer = styled.div`
 
   h3 {
     margin-left: 15px;
-    font-size: 24px;
+    font-size: 20px;
+    line-height: 25px;
   }
 `;
 
