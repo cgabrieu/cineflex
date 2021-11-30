@@ -14,8 +14,9 @@ export default function Seats() {
   const [seatsList, setSeatsList] = useState(null);
   const [selectedSeats, setSelectedSeats] = useState(null);
 
-  const { showtimeId } = useParams();
   const navigate = useNavigate();
+  const { showtimeId } = useParams();
+
   const { booking, setBooking } = useContext(BookingContext);
 
   useEffect(() => {
@@ -69,6 +70,20 @@ export default function Seats() {
     });
   }
 
+  function drawSelectedSeat(index) {
+    console.log(index);
+    const stateSeat = seatsList[index].isAvailable;
+
+    if (stateSeat === false) {
+      alert("Esse assento não está disponível.");
+      return;
+    }
+    if (stateSeat) seatsList[index].isAvailable = null;
+    else seatsList[index].isAvailable = true;
+
+    setSeatsList([...seatsList]);
+  }
+
   console.log(selectedSeats);
 
   return (
@@ -79,7 +94,13 @@ export default function Seats() {
         <ScreenContainer>TELA</ScreenContainer>
         <ContainerSeats>
           {seatsList.map(({ id, name, isAvailable }, index) => (
-            <li key={index} onClick={() => handleSelectSeat({ seatId: id })}>
+            <li
+              key={index}
+              onClick={() => {
+                handleSelectSeat({ seatId: id });
+                drawSelectedSeat(index);
+              }}
+            >
               <Seat available={isAvailable}>{name}</Seat>
             </li>
           ))}
