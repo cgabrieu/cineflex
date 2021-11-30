@@ -1,72 +1,74 @@
 import styled from "styled-components";
-import React from 'react';
-import { cpfMask } from './CPFMask'
+import React from "react";
+import { cpfMask } from "./CPFMask";
 
-export default function InputsBuyer({ selectedSeats, setSelectedSeats, index }) {
-
-    return (
-        <ContainerInput>
-            <h3>{`Assento`}</h3>
-            <p>Nome do espectador: </p>
-            <input
-                placeholder="Digite seu nome..."
-                onChange= {(e) => setSelectedSeats({
-                    ...selectedSeats,
-                    compradores: [ 
-                        ...selectedSeats.compradores, 
-                        { ...selectedSeats.compradores[index], nome: e.target.value }
-                    ]
-                })}
-                maxLength={35}
-                minLength={5}
-                value={selectedSeats.compradores[index].nome}
-            />
-            <p>CPF do espectador: </p>
-            <input
-                placeholder="Digite seu CPF..."
-                onChange= {(e) => setSelectedSeats({
-                    ...selectedSeats,
-                    compradores: [ 
-                        ...selectedSeats.compradores, 
-                        { ...selectedSeats.compradores[index], cpf: e.target.value }
-                    ]
-                })}
-                maxLength={14}
-                value={selectedSeats.compradores[index].cpf}
-            />
-        </ContainerInput>
-    );
+export default function InputsBuyer({ buyerInfo, setBuyerInfo, index }) {
+  return (
+    <ContainerInput>
+      <h3>{`Assento`}</h3>
+      <p>Nome do espectador: </p>
+      <input
+        placeholder="Digite seu nome..."
+        onChange={(e) => {
+          setBuyerInfo(
+            buyerInfo.map((b, bIndex) =>
+              bIndex === index
+                ? { ...buyerInfo[bIndex], nome: e.target.value }
+                : b
+            )
+          );
+        }}
+        maxLength={35}
+        minLength={5}
+        value={buyerInfo[index].nome}
+      />
+      <p>CPF do espectador: </p>
+      <input
+        placeholder="Digite seu CPF..."
+        onChange={(e) => {
+            setBuyerInfo(
+              buyerInfo.map((b, bIndex) =>
+                bIndex === index
+                  ? { ...buyerInfo[bIndex], cpf: e.target.value }
+                  : b
+              )
+            );
+          }}
+        maxLength={14}
+        value={cpfMask(buyerInfo[index].cpf)}
+      />
+    </ContainerInput>
+  );
 }
 
 const ContainerInput = styled.div`
-    width: 330px;
-    height: 200px;
-    margin: 5px auto 0 auto;
-    h3 {
-        font-size: 20px;
-        text-align: center;
-        color:#ff9505;
-        margin-bottom: 0px;
-
+  width: 330px;
+  height: 200px;
+  margin: 5px auto 0 auto;
+  h3 {
+    font-size: 20px;
+    text-align: center;
+    color: #ff9505;
+    margin-bottom: 0px;
+  }
+  input:invalid {
+    border: 1px solid red;
+  }
+  input {
+    width: 100%;
+    height: 50px;
+    outline: none;
+    border: 1px solid #d5d5d5;
+    border-radius: 3px;
+    padding-left: 15px;
+    font-size: 18px;
+    &::placeholder {
+      color: #afafaf;
     }
-    input:invalid {
-        border:1px solid red;
-    }
-    input {
-        width: 100%;
-        height: 50px;
-        outline: none;
-        border: 1px solid #D5D5D5;
-        border-radius: 3px;
-        padding-left: 15px;
-        &::placeholder {
-            color: #AFAFAF;
-            font-size: 18px;
-        }
-    }
-    p {
-        font-size: 18px;
-        color:#ff9505;
-        margin: 7px 0 3px 0;
-    }
-`
+  }
+  p {
+    font-size: 18px;
+    color: #ff9505;
+    margin: 7px 0 3px 0;
+  }
+`;

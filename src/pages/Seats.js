@@ -78,9 +78,9 @@ export default function Seats() {
         </ContainerOptions>
       </div>
       <br />
-      {/* {buyerInfo.map(() => (
-        <InputsBuyer />
-      ))} */}
+      {buyerInfo.map((b, index) => (
+        <InputsBuyer buyerInfo={buyerInfo} setBuyerInfo={setBuyerInfo} index={index}/>
+      ))}
       {buyerInfo.length > 0 && (
         <ButtonReservation
           onClick={() => {
