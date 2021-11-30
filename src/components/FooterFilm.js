@@ -34,7 +34,7 @@ const Footer = styled.div`
   padding: 15px;
   display: flex;
   align-items: center;
-  box-shadow: 0px 0px 15px 0px #ff9505;
+  box-shadow: 0px 0px 5px 0px #ff9505;
 
   h3 {
     margin-left: 15px;

@@ -9,7 +9,8 @@ const Loading = () => (
 );
 
 const LoadingAnimation = styled(LoadingLogo)`
-	animation: opacity .5s;
+	animation: opacityScale .5s;
+	width: 130px;
 `;
 
 export default Loading;

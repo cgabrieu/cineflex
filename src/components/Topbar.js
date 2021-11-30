@@ -46,5 +46,5 @@ const Header = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 0px 15px 0px #ff9505;
+  box-shadow: 0px 0px 5px 0px #ff9505;
 `;

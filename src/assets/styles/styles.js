@@ -45,6 +45,7 @@ export const Container = styled.div`
     border-radius: 5px;
     box-shadow: 0px 0px 5px 0px #ff9505;
     margin-bottom: 25px;
+    animation: opacityScale 1s;
   }
 `;
 

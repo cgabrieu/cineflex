@@ -1,13 +1,16 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 import { TitlePage, Button } from "../assets/styles/styles";
 import { postSeat } from "../services/api/api";
+import { BookingContext } from "../contexts/bookingContext";
 
 export default function Success() {
   const [isSent, setIsSent] = useState(null);
+
+  const { booking, setBooking } = useContext(BookingContext);
 
   useEffect(() => {
     postSeat()

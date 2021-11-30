@@ -10,10 +10,9 @@ import InputsBuyer from "../components/InputsBuyer";
 import { getSeats } from "../services/api/api";
 import { BookingContext } from "../contexts/bookingContext";
 
-let buyers = [];
-
 export default function Seats() {
   const [seatsList, setSeatsList] = useState(null);
+  const [selectedSeats, setSelectedSeats] = useState(null);
 
   const { showtimeId } = useParams();
   const navigate = useNavigate();
@@ -29,28 +28,11 @@ export default function Seats() {
         });
         setSeatsList(seats);
       })
-      .catch(() => {
-        setSeatsList([]);
-      });
+      .catch(() => setSeatsList([]));
   }, []);
 
   if (seatsList === null) return <Loading />;
   else if (seatsList.length === 0) return <Error />;
-
-  const selectSeat = (index) => {
-    const stateSeat = seatsList[index].isAvailable;
-
-    if (stateSeat === false) {
-      alert("Esse assento não está disponível.");
-      return;
-    }
-    if (stateSeat) seatsList[index].isAvailable = null;
-    else seatsList[index].isAvailable = true;
-
-    setSeatsList([...seatsList]);
-  };
-
-  const selectedSeats = seatsList.filter((e) => e.isAvailable === null);
 
   /*   const getReservationObject = () => {
     return {
@@ -59,52 +41,78 @@ export default function Seats() {
     };
   }; */
 
-  const updateBuyers = (index, idAssento, name, CPF) => {
-    const object = { idAssento: idAssento, nome: name, cpf: CPF };
+  function handleSelectSeat({ seatId }) {
+    if (!selectedSeats) {
+      setSelectedSeats({
+        ids: [seatId],
+        compradores: [{ idAssento: seatId, nome: "", cpf: "" }],
+      });
+      return;
+    }
 
-    if (buyers.indexOf[index] === -1) buyers.push(object);
-    else buyers[index] = object;
-  };
+    if (selectedSeats.ids.includes(seatId)) {
+      setSelectedSeats({
+        ids: selectedSeats.ids.filter((s) => s !== seatId),
+        compradores: selectedSeats.compradores.filter(
+          (s) => s.idAssento !== seatId
+        ),
+      });
+      return;
+    }
+
+    setSelectedSeats({
+      ids: [...selectedSeats.ids, seatId],
+      compradores: [
+        ...selectedSeats.compradores,
+        { idAssento: seatId, nome: "", cpf: "" },
+      ],
+    });
+  }
+
+  console.log(selectedSeats);
 
   return (
     <Container>
       <TitlePage>Selecione o(s) assentos(s)</TitlePage>
-    
-        <div>
-      <ScreenContainer>TELA</ScreenContainer>
-      <ContainerSeats>
-        {seatsList.map(({ id, name, isAvailable }, index) => (
-          <li key={index} onClick={() => selectSeat(index)}>
-            <Seat id={id} available={isAvailable}>
-              {name}
-            </Seat>
-          </li>
-        ))}
-      </ContainerSeats>
 
-      <ContainerOptions>
-        <Seat available={null} showText />
-        <Seat available={true} showText />
-        <Seat available={false} showText />
-      </ContainerOptions>
+      <div>
+        <ScreenContainer>TELA</ScreenContainer>
+        <ContainerSeats>
+          {seatsList.map(({ id, name, isAvailable }, index) => (
+            <li key={index} onClick={() => handleSelectSeat({ seatId: id })}>
+              <Seat available={isAvailable}>{name}</Seat>
+            </li>
+          ))}
+        </ContainerSeats>
+
+        <ContainerOptions>
+          <Seat available={null} showText />
+          <Seat available={true} showText />
+          <Seat available={false} showText />
+        </ContainerOptions>
       </div>
       <br />
-      {selectedSeats.map((e, index) => (
+      {/* {selectedSeats.map((e, index) => (
         <InputsBuyer
           key={index}
           index={index}
           seat={e}
-          updateBuyers={updateBuyers}
+          setBuyers={setBuyers}
         />
       ))}
 
-      {selectedSeats.length > 0 ? (
-        <ButtonReservation onClick={() => navigate("/sucesso")}>
+      {selectedSeats.length ? (
+        <ButtonReservation
+          onClick={() => {
+            
+            navigate("/sucesso");
+          }}
+        >
           Reservar assento(s)
         </ButtonReservation>
       ) : (
         ""
-      )}
+      )} */}
     </Container>
   );
 }
@@ -116,7 +124,7 @@ const ScreenContainer = styled.div`
   background-color: white;
   color: black;
   font-weight: bold;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   font-size: 14px;
@@ -131,7 +139,6 @@ const ContainerSeats = styled.ul`
   align-items: center;
   flex-wrap: wrap;
   margin: 0 auto;
-  animation: opacityScale 1s;
 
   li {
     display: flex;
