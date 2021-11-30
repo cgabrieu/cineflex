@@ -4,7 +4,6 @@ import { TitlePage, Button, Container } from "../assets/styles/styles";
 import { useParams, useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
-import FooterFilm from "../components/FooterFilm";
 import Seat from "../components/Seat";
 import InputsBuyer from "../components/InputsBuyer";
 import { getSeats } from "../services/api/api";
@@ -12,7 +11,7 @@ import { BookingContext } from "../contexts/bookingContext";
 
 export default function Seats() {
   const [seatsList, setSeatsList] = useState(null);
-  const [selectedSeats, setSelectedSeats] = useState(null);
+  const [buyerInfo, setBuyerInfo] = useState([]);
 
   const navigate = useNavigate();
   const { showtimeId } = useParams();
@@ -32,75 +31,41 @@ export default function Seats() {
       .catch(() => setSeatsList([]));
   }, []);
 
+  function handleSelectSeat(seatId) {
+    if (buyerInfo.some((b) => b.idAssento === seatId)) {
+      setBuyerInfo(buyerInfo.filter((b) => b.idAssento !== seatId));
+      drawSelectSeat(seatId, true);
+    } else {
+      setBuyerInfo([...buyerInfo, { idAssento: seatId, nome: "", cpf: "" }]);
+      drawSelectSeat(seatId, null);
+    }
+  }
+
+  function drawSelectSeat(seatId, type) {
+    const seatIndex = seatsList.findIndex((s) => s.id === seatId);
+    const newSeatsList = seatsList.filter((s) => s.id !== seatId);
+
+    setSeatsList(
+      [
+        ...newSeatsList,
+        { id: seatId, name: `${seatIndex + 1}`, isAvailable: type },
+      ].sort((a, b) => a.name - b.name)
+    );
+  }
+
+  console.log(buyerInfo);
+
   if (seatsList === null) return <Loading />;
   else if (seatsList.length === 0) return <Error />;
-
-  /*   const getReservationObject = () => {
-    return {
-      ids: selectedSeats.map((e) => e.id),
-      compradores: buyers,
-    };
-  }; */
-
-  function handleSelectSeat({ seatId }) {
-    if (!selectedSeats) {
-      setSelectedSeats({
-        ids: [seatId],
-        compradores: [{ idAssento: seatId, nome: "", cpf: "" }],
-      });
-      return;
-    }
-
-    if (selectedSeats.ids.includes(seatId)) {
-      setSelectedSeats({
-        ids: selectedSeats.ids.filter((s) => s !== seatId),
-        compradores: selectedSeats.compradores.filter(
-          (s) => s.idAssento !== seatId
-        ),
-      });
-      return;
-    }
-
-    setSelectedSeats({
-      ids: [...selectedSeats.ids, seatId],
-      compradores: [
-        ...selectedSeats.compradores,
-        { idAssento: seatId, nome: "", cpf: "" },
-      ],
-    });
-  }
-
-  function drawSelectedSeat(index) {
-    console.log(index);
-    const stateSeat = seatsList[index].isAvailable;
-
-    if (stateSeat === false) {
-      alert("Esse assento não está disponível.");
-      return;
-    }
-    if (stateSeat) seatsList[index].isAvailable = null;
-    else seatsList[index].isAvailable = true;
-
-    setSeatsList([...seatsList]);
-  }
-
-  console.log(selectedSeats);
 
   return (
     <Container>
       <TitlePage>Selecione o(s) assentos(s)</TitlePage>
-
       <div>
         <ScreenContainer>TELA</ScreenContainer>
         <ContainerSeats>
           {seatsList.map(({ id, name, isAvailable }, index) => (
-            <li
-              key={index}
-              onClick={() => {
-                handleSelectSeat({ seatId: id });
-                drawSelectedSeat(index);
-              }}
-            >
+            <li key={id} onClick={() => handleSelectSeat(id)}>
               <Seat available={isAvailable}>{name}</Seat>
             </li>
           ))}
@@ -113,27 +78,18 @@ export default function Seats() {
         </ContainerOptions>
       </div>
       <br />
-      {/* {selectedSeats.map((e, index) => (
-        <InputsBuyer
-          key={index}
-          index={index}
-          seat={e}
-          setBuyers={setBuyers}
-        />
-      ))}
-
-      {selectedSeats.length ? (
+      {/* {buyerInfo.map(() => (
+        <InputsBuyer />
+      ))} */}
+      {buyerInfo.length > 0 && (
         <ButtonReservation
           onClick={() => {
-            
             navigate("/sucesso");
           }}
         >
           Reservar assento(s)
         </ButtonReservation>
-      ) : (
-        ""
-      )} */}
+      )}
     </Container>
   );
 }

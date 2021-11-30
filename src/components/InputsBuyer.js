@@ -1,28 +1,38 @@
 import styled from "styled-components";
-import React, { useState } from 'react';
+import React from 'react';
 import { cpfMask } from './CPFMask'
 
-export default function InputsBuyer({ seat }) {
-    const [name, setName] = useState("");
-    const [CPF, setCPF] = useState("");
+export default function InputsBuyer({ selectedSeats, setSelectedSeats, index }) {
 
     return (
         <ContainerInput>
-            <h3>{`Assento ${seat.name}`}</h3>
+            <h3>{`Assento`}</h3>
             <p>Nome do espectador: </p>
             <input
                 placeholder="Digite seu nome..."
-                onChange= {(e) => setName(e.target.value)}
+                onChange= {(e) => setSelectedSeats({
+                    ...selectedSeats,
+                    compradores: [ 
+                        ...selectedSeats.compradores, 
+                        { ...selectedSeats.compradores[index], nome: e.target.value }
+                    ]
+                })}
                 maxLength={35}
                 minLength={5}
-                value={name}
+                value={selectedSeats.compradores[index].nome}
             />
             <p>CPF do espectador: </p>
             <input
                 placeholder="Digite seu CPF..."
-                onChange= {(e) => setCPF(e.target.value)}
+                onChange= {(e) => setSelectedSeats({
+                    ...selectedSeats,
+                    compradores: [ 
+                        ...selectedSeats.compradores, 
+                        { ...selectedSeats.compradores[index], cpf: e.target.value }
+                    ]
+                })}
                 maxLength={14}
-                value={cpfMask(CPF)}
+                value={selectedSeats.compradores[index].cpf}
             />
         </ContainerInput>
     );
