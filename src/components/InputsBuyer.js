@@ -2,10 +2,11 @@ import styled from "styled-components";
 import React from "react";
 import { cpfMask } from "./CPFMask";
 
-export default function InputsBuyer({ buyerInfo, setBuyerInfo, index }) {
+export default function InputsBuyer({ buyerInfo, setBuyerInfo, index, seatName }) {
+  
   return (
     <ContainerInput>
-      <h3>{`Assento`}</h3>
+      <h3>{`Assento nº ${seatName}`}</h3>
       <p>Nome do espectador: </p>
       <input
         placeholder="Digite seu nome..."
@@ -26,14 +27,14 @@ export default function InputsBuyer({ buyerInfo, setBuyerInfo, index }) {
       <input
         placeholder="Digite seu CPF..."
         onChange={(e) => {
-            setBuyerInfo(
-              buyerInfo.map((b, bIndex) =>
-                bIndex === index
-                  ? { ...buyerInfo[bIndex], cpf: e.target.value }
-                  : b
-              )
-            );
-          }}
+          setBuyerInfo(
+            buyerInfo.map((b, bIndex) =>
+              bIndex === index
+                ? { ...buyerInfo[bIndex], cpf: e.target.value }
+                : b
+            )
+          );
+        }}
         maxLength={14}
         value={cpfMask(buyerInfo[index].cpf)}
       />

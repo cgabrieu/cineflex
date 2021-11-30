@@ -6,12 +6,13 @@ import Loading from "../components/Loading";
 import Error from "../components/Error";
 import Seat from "../components/Seat";
 import InputsBuyer from "../components/InputsBuyer";
-import { getSeats } from "../services/api/api";
+import { getSeats, makeBooking } from "../services/api/api";
 import { BookingContext } from "../contexts/bookingContext";
 
 export default function Seats() {
   const [seatsList, setSeatsList] = useState(null);
   const [buyerInfo, setBuyerInfo] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const { showtimeId } = useParams();
@@ -53,8 +54,6 @@ export default function Seats() {
     );
   }
 
-  console.log(buyerInfo);
-
   if (seatsList === null) return <Loading />;
   else if (seatsList.length === 0) return <Error />;
 
@@ -79,12 +78,35 @@ export default function Seats() {
       </div>
       <br />
       {buyerInfo.map((b, index) => (
-        <InputsBuyer buyerInfo={buyerInfo} setBuyerInfo={setBuyerInfo} index={index}/>
+        <InputsBuyer
+          key={b.idAssento}
+          buyerInfo={buyerInfo}
+          setBuyerInfo={setBuyerInfo}
+          index={index}
+          seatName={seatsList.find((s) => s.id === b.idAssento).name}
+        />
       ))}
-      {buyerInfo.length > 0 && (
+      {buyerInfo.length && (
         <ButtonReservation
           onClick={() => {
-            navigate("/sucesso");
+            setIsLoading(true);
+            const objectBooking = {
+              ids: buyerInfo.map((b) => b.idAssento),
+              compradores: buyerInfo,
+            }
+            makeBooking(objectBooking)
+              .then(() => {
+                objectBooking.compradores.forEach((b) => {
+                  b.seatName = seatsList.find((s) => s.id === b.idAssento).name;
+                });
+                setBooking({
+                  ...booking,
+                  buyers: objectBooking.compradores
+                })
+                navigate("/sucesso");
+              })
+              .catch(() => alert("Ocorreu um erro ao realizar a reserva."))
+              .then(() => setIsLoading(false));
           }}
         >
           Reservar assento(s)

@@ -16,6 +16,6 @@ export function getSeats(showtimeId) {
   return api.get(`/showtimes/${showtimeId}/seats`);
 }
 
-export function postSeat(objectReservation) {
-  return api.post("/seats/book-many", objectReservation);
+export function makeBooking(booking) {
+  return api.post("/seats/book-many", booking);
 }

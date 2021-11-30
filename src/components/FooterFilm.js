@@ -7,8 +7,6 @@ export default function FooterFilm() {
 
   const { movie, showtime } = booking;
   
-  console.log(booking);
-
   return (
     <Footer>
       <Card>
