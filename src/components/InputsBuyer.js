@@ -1,9 +1,8 @@
-import styled from "styled-components";
-import React from "react";
-import { cpfMask } from "./CPFMask";
+import styled from 'styled-components';
+import React from 'react';
+import cpfMask from '../utils/CPFMask.js';
 
 export default function InputsBuyer({ buyerInfo, setBuyerInfo, index, seatName }) {
-  
   return (
     <ContainerInput>
       <h3>{`Assento nº ${seatName}`}</h3>
@@ -13,9 +12,7 @@ export default function InputsBuyer({ buyerInfo, setBuyerInfo, index, seatName }
         onChange={(e) => {
           setBuyerInfo(
             buyerInfo.map((b, bIndex) =>
-              bIndex === index
-                ? { ...buyerInfo[bIndex], nome: e.target.value }
-                : b
+              bIndex === index ? { ...buyerInfo[bIndex], nome: e.target.value } : b
             )
           );
         }}
@@ -29,9 +26,7 @@ export default function InputsBuyer({ buyerInfo, setBuyerInfo, index, seatName }
         onChange={(e) => {
           setBuyerInfo(
             buyerInfo.map((b, bIndex) =>
-              bIndex === index
-                ? { ...buyerInfo[bIndex], cpf: e.target.value }
-                : b
+              bIndex === index ? { ...buyerInfo[bIndex], cpf: e.target.value } : b
             )
           );
         }}
@@ -43,9 +38,8 @@ export default function InputsBuyer({ buyerInfo, setBuyerInfo, index, seatName }
 }
 
 const ContainerInput = styled.div`
-  width: 330px;
+  width: 310px;
   height: 200px;
-  margin: 5px auto 0 auto;
   h3 {
     font-size: 20px;
     text-align: center;

@@ -1,7 +1,8 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 import './assets/styles/reset.css';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import Topbar from './components/Topbar';
 import Movies from './pages/Movies';
 import Showtimes from './pages/Showtimes';
@@ -18,9 +19,8 @@ function App() {
     showtime: '',
   });
 
-  const bookingContext = useMemo(() => ({ booking, setBooking }), []);
   return (
-    <BookingContext.Provider value={bookingContext}>
+    <BookingContext.Provider value={{ booking, setBooking }}>
       <GlobalStyle />
       <Router>
         <Topbar />

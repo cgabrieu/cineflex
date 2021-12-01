@@ -63,7 +63,7 @@ export default function Seats() {
       <div>
         <ScreenContainer>TELA</ScreenContainer>
         <ContainerSeats>
-          {seatsList.map(({ id, name, isAvailable }, index) => (
+          {seatsList.map(({ id, name, isAvailable }) => (
             <li key={id} onClick={() => handleSelectSeat(id)}>
               <Seat available={isAvailable}>{name}</Seat>
             </li>
@@ -125,7 +125,7 @@ const LoaderStyled = styled(Loader)`
 `;
 
 const ScreenContainer = styled.div`
-  width: 345px;
+  max-width: 345px;
   height: 15px;
   margin-bottom: 5px;
   background-color: white;
@@ -139,21 +139,12 @@ const ScreenContainer = styled.div`
 `;
 
 const ContainerSeats = styled.ul`
-  width: 350px;
-  height: 210px;
+  max-width: 350px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   margin: 0 auto;
-
-  li {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 13px;
-  }
 `;
 
 const ContainerOptions = styled(ContainerSeats)`

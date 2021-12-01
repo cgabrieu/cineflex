@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import React, { useContext } from 'react';
-import { TitlePage, Button } from '../assets/styles/styles';
+import { TitlePage, Button, Container } from '../assets/styles/styles';
 import { BookingContext } from '../contexts/bookingContext';
 import { ReactComponent as TicketLogo } from '../assets/icons/ticket.svg';
 
@@ -48,7 +48,7 @@ const TicketStyledLogo = styled(TicketLogo)`
 `;
 
 const Ticket = styled.div`
-  width: 400px;
+  width: 350px;
   border: 1px solid #ff9505;
   border-radius: 3px;
   padding: 0 20px;
@@ -62,6 +62,9 @@ const Ticket = styled.div`
   }
   h2 {
     margin-bottom: 5px;
+  }
+  @media (max-width: 375px) {
+    width: 300px;
   }
 `;
 
@@ -83,6 +86,9 @@ const ContainerSuccess = styled.div`
   background-color: #000;
   box-shadow: 0px 0px 5px 0px #ff9505;
   border-radius: 5px;
+  @media (max-width: 420px) {
+    border-radius: 0px;
+  }
 `;
 
 const ContainerInfo = styled.div`
