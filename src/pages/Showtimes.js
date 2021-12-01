@@ -1,11 +1,11 @@
-import styled from "styled-components";
-import React, { useState, useEffect, useContext } from "react";
-import { TitlePage, Button } from "../assets/styles/styles";
-import { useParams, useNavigate } from "react-router-dom";
-import Loading from "../components/Loading";
-import Error from "../components/Error";
-import { getShowtimes } from "../services/api/api";
-import { BookingContext } from "../contexts/bookingContext";
+import styled from 'styled-components';
+import React, { useState, useEffect, useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { TitlePage, Button } from '../assets/styles/styles';
+import Loading from '../components/Loading';
+import Error from '../components/Error';
+import { getShowtimes } from '../services/api/api';
+import { BookingContext } from '../contexts/bookingContext';
 
 export default function Showtimes() {
   const [showtimesInfo, setShowtimesInfo] = useState(null);
@@ -18,26 +18,21 @@ export default function Showtimes() {
       .then((res) => {
         setShowtimesInfo(res.data);
         setBooking({
-          movie: res.data
+          movie: res.data,
         });
       })
       .catch(() => setShowtimesInfo([]));
   }, []);
 
   if (showtimesInfo === null) return <Loading />;
-  else if (showtimesInfo.length === 0) return <Error />;
+  if (showtimesInfo.length === 0) return <Error />;
 
   return (
     <>
       <TitlePage>Selecione o horário</TitlePage>
       <ContainerShowtimes>
-        {showtimesInfo.days.map((e, index) => (
-          <Showtime
-            key={index}
-            weekday={e.weekday}
-            date={e.date}
-            showtimes={e.showtimes}
-          />
+        {showtimesInfo.days.map((e) => (
+          <Showtime key={e.id} weekday={e.weekday} date={e.date} showtimes={e.showtimes} />
         ))}
       </ContainerShowtimes>
     </>
@@ -49,9 +44,9 @@ const Showtime = ({ weekday, date, showtimes }) => {
 
   return (
     <ContainerShowtime>
-      <DayInfoShowtime>{weekday + " - " + date}</DayInfoShowtime>
-      {showtimes.map(({ name: time, id }, index) => (
-        <Button key={index} onClick={() => navigate(`/assentos/${id}`)}>
+      <DayInfoShowtime>{`${weekday} - ${date}`}</DayInfoShowtime>
+      {showtimes.map(({ name: time, id }) => (
+        <Button key={id} onClick={() => navigate(`/assentos/${id}`)}>
           {time}
         </Button>
       ))}

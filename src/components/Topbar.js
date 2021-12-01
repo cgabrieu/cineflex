@@ -1,15 +1,16 @@
-import styled from "styled-components";
-import { IoArrowBack } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
-import { ReactComponent as Cineflex } from "../assets/icons/cineflex-logo.svg";
-import { useLocation } from "react-router-dom";
+import styled from 'styled-components';
+import { IoArrowBack } from 'react-icons/io5';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { ReactComponent as Cineflex } from '../assets/icons/cineflex-logo.svg';
 
 export default function Topbar() {
   const navigate = useNavigate();
   return (
     <Header>
-      {(useLocation().pathname !== '/') && <GoBackIcon color="#ff9505" onClick={() => navigate(-1)} />}
-      <CineflexLogo onClick={() => navigate("/")}/>
+      {useLocation().pathname !== '/' && (
+        <GoBackIcon color="#ff9505" onClick={() => navigate(-1)} />
+      )}
+      <CineflexLogo onClick={() => navigate('/')} />
     </Header>
   );
 }
@@ -28,7 +29,7 @@ const GoBackIcon = styled(IoArrowBack)`
   position: absolute;
   top: 10px;
   left: 15px;
-  background-color: #0D1C32;
+  background-color: #0d1c32;
   border-radius: 5px;
   cursor: pointer;
   &:hover {
@@ -46,5 +47,5 @@ const Header = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 0px 15px 0px #ff9505;
+  box-shadow: 0px 0px 5px 0px #ff9505;
 `;

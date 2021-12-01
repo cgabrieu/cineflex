@@ -1,13 +1,11 @@
-import { useContext } from "react";
-import styled from "styled-components";
-import { BookingContext } from "../contexts/bookingContext";
+import { useContext } from 'react';
+import styled from 'styled-components';
+import { BookingContext } from '../contexts/bookingContext';
 
 export default function FooterFilm() {
   const { booking } = useContext(BookingContext);
 
   const { movie, showtime } = booking;
-  
-  console.log(booking);
 
   return (
     <Footer>
@@ -34,7 +32,7 @@ const Footer = styled.div`
   padding: 15px;
   display: flex;
   align-items: center;
-  box-shadow: 0px 0px 15px 0px #ff9505;
+  box-shadow: 0px 0px 5px 0px #ff9505;
 
   h3 {
     margin-left: 15px;

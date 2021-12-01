@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from 'styled-components';
 
 export const TitlePage = styled.h1`
   text-align: center;
@@ -45,6 +44,7 @@ export const Container = styled.div`
     border-radius: 5px;
     box-shadow: 0px 0px 5px 0px #ff9505;
     margin-bottom: 25px;
+    animation: opacityScale 1s;
   }
 `;
 
@@ -72,6 +72,18 @@ export const GlobalStyle = createGlobalStyle`
   
   ::-webkit-scrollbar-thumb {
       background: #FF0000;
+  }
+
+  .sweet-alert {
+    background-color: #000;
+    box-shadow: 0px 0px 2px 0px #ff9505;
+    .swal2-title {
+      color: #ff9505;
+      font-size: 18px;
+    }
+    .swal2-icon.swal2-error {
+      border-color: #ef4a4a !important;
+    }
   }
 
   @keyframes moveToUpFooter {

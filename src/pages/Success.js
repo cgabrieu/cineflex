@@ -1,84 +1,108 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import React, { useState, useEffect } from "react";
-import Loading from "../components/Loading";
-import Error from "../components/Error";
-import { TitlePage, Button } from "../assets/styles/styles";
-import { postSeat } from "../services/api/api";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { TitlePage, Button } from '../assets/styles/styles';
+import { BookingContext } from '../contexts/bookingContext';
+import { ReactComponent as TicketLogo } from '../assets/icons/ticket.svg';
 
 export default function Success() {
-  const [isSent, setIsSent] = useState(null);
+  const { booking } = useContext(BookingContext);
 
-  useEffect(() => {
-    postSeat()
-      .then(() => setIsSent(true))
-      .catch(() => setIsSent(false));
-  }, []);
-
-  if (isSent === null) return <Loading />;
-  else if (isSent === false) return <Error />;
+  const { movie, showtime, buyers } = booking;
 
   return (
     <>
       <TitlePageSuccess>Pedido feito com sucesso!</TitlePageSuccess>
       <ContainerSuccess>
-        <div>
-          <TitleSection>Filme e sessão</TitleSection>
-          TITULO DO FILME
-          <br />
-          DATA - NOME DA SESSAO
-        </div>
-        <div>
-          <TitleSection>Ingressos</TitleSection>
-          {/* {seatsInfo.map((e, index) => (
-            <p key={index}>{`Assento ${e.name}`}</p>
-          ))} */}
-        </div>
-        <div>
-          <TitleSection>Compradores</TitleSection>
-          {/* {objectReservation.compradores.map((e, index) => (
-            <div key={index}>
-              <h2>Comprador {index + 1}</h2>
-              <p>Nome: {e.nome}</p>
-              <p>CPF: {e.cpf}</p>
+        <TitleSection>Filme e sessão</TitleSection>
+        <ImageMovie src={movie.posterURL} />
+        <br />
+        <ContainerInfo>
+          <p>{movie.title}</p>
+          <p>{`${showtime.day.weekday} - ${showtime.day.date}`}</p>
+          <p>{`${showtime.name}`}</p>
+        </ContainerInfo>
+        <TitleSection>Ingressos</TitleSection>
+        {buyers.map((b) => (
+          <Ticket key={b.idAssento}>
+            <div>
+              <h2>Assento {b.seatName}</h2>
+              <p>Nome: {b.nome}</p>
+              <p>CPF: {b.cpf}</p>
             </div>
-          ))} */}
-        </div>
-        <div>
-          <Link to="/">
-            <ButtonHome>Voltar para Home</ButtonHome>
-          </Link>
-        </div>
+            <TicketStyledLogo />
+          </Ticket>
+        ))}
+        <Link to="/">
+          <ButtonHome>Voltar para Home</ButtonHome>
+        </Link>
       </ContainerSuccess>
     </>
   );
 }
 
-const ContainerSuccess = styled.div`
-  margin: 0 35px;
-  div {
-    font-size: 22px;
-    display: flex;
-    color: #293845;
-    justify-content: left;
-    flex-direction: column;
-    margin-bottom: 40px;
-    line-height: 26px;
+const TicketStyledLogo = styled(TicketLogo)`
+  width: 90px;
+`;
 
-    div {
-      margin-bottom: 0px;
-      h2 {
-        margin: 15px 0 5px 0;
-        font-weight: bold;
-        font-size: 18px;
-      }
-    }
+const Ticket = styled.div`
+  width: 350px;
+  border: 1px solid #ff9505;
+  border-radius: 3px;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  p {
+    color: #f3b830;
+    line-height: 20px;
+  }
+  h2 {
+    margin-bottom: 5px;
+  }
+  @media (max-width: 375px) {
+    width: 300px;
   }
 `;
 
+const ImageMovie = styled.img`
+  max-width: 250px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 2px 0px #ff9505;
+`;
+
+const ContainerSuccess = styled.div`
+  max-width: 500px;
+  margin: 0 auto;
+  margin-bottom: 80px;
+  animation: opacityScale 1s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #000;
+  box-shadow: 0px 0px 5px 0px #ff9505;
+  border-radius: 5px;
+  @media (max-width: 420px) {
+    border-radius: 0px;
+  }
+`;
+
+const ContainerInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #f3b830;
+  font-size: 17px;
+  line-height: 20px;
+  margin-bottom: 30px;
+`;
+
 const TitlePageSuccess = styled(TitlePage)`
-  color: #247a6b;
+  color: #ff9505;
   font-weight: bold;
+  font-size: 25px;
 `;
 
 const TitleSection = styled.h1`
@@ -88,6 +112,6 @@ const TitleSection = styled.h1`
 `;
 
 const ButtonHome = styled(Button)`
-  max-width: 225px;
-  margin: 0 auto;
+  width: 200px;
+  margin: 30px 0 10px 0;
 `;

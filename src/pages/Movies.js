@@ -1,10 +1,10 @@
-import styled from "styled-components";
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Loading from "../components/Loading";
-import Error from "../components/Error";
-import { TitlePage } from "../assets/styles/styles";
-import { getMovies } from "../services/api/api";
+import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Loading from '../components/Loading';
+import Error from '../components/Error';
+import { TitlePage } from '../assets/styles/styles';
+import { getMovies } from '../services/api/api';
 
 export default function Movies() {
   const [listMovies, setListMovies] = useState(null);
@@ -16,21 +16,21 @@ export default function Movies() {
   }, []);
 
   if (listMovies === null) return <Loading />;
-  else if (listMovies.length === 0) return <Error />;
+  if (listMovies.length === 0) return <Error />;
 
   return (
     <>
       <TitlePage>Selecione o filme</TitlePage>
       <ListMovies>
-        {listMovies.map((movie, index) => (
-          <Movie key={index} movie={movie} />
+        {listMovies.map((movie) => (
+          <Movie key={movie.id} movie={movie} />
         ))}
       </ListMovies>
     </>
   );
 }
 
-const Movie = ({ movie }) => {
+const Movie = function ({ movie }) {
   const navigate = useNavigate();
   return (
     <Card>
