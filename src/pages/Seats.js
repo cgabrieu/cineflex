@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { TitlePage, Button, Container } from '../assets/styles/styles';
 import Loading from '../components/Loading';
 import Error from '../components/Error';
@@ -45,6 +46,17 @@ export default function Seats() {
   }
 
   function handleSelectSeat(seatId) {
+    if (seatsList.find((s) => s.id === seatId).isAvailable === false) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Assento não disponível',
+        showConfirmButton: false,
+        timer: 900,
+        customClass: 'sweet-alert',
+      });
+      return;
+    }
+
     if (buyerInfo.some((b) => b.idAssento === seatId)) {
       setBuyerInfo(buyerInfo.filter((b) => b.idAssento !== seatId));
       drawSelectSeat(seatId, true);
@@ -52,6 +64,47 @@ export default function Seats() {
       setBuyerInfo([...buyerInfo, { idAssento: seatId, nome: '', cpf: '' }]);
       drawSelectSeat(seatId, null);
     }
+  }
+
+  function handleMakeBooking() {
+    const objectBooking = {
+      ids: buyerInfo.map((b) => b.idAssento),
+      compradores: buyerInfo,
+    };
+
+    let validationError;
+
+    objectBooking.compradores.forEach((b) => {
+      if (b.nome.length < 3) validationError = 'Nome inválido';
+      else if (b.cpf.length < 14) validationError = 'CPF inválido';
+    });
+
+    if (validationError) {
+      Swal.fire({
+        icon: 'info',
+        title: validationError,
+        showConfirmButton: false,
+        timer: 900,
+        customClass: 'sweet-alert',
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    makeBooking(objectBooking)
+      .then(() => {
+        objectBooking.compradores.forEach((b) => {
+          b.seatName = seatsList.find((s) => s.id === b.idAssento).name;
+        });
+
+        setBooking({
+          ...booking,
+          buyers: objectBooking.compradores,
+        });
+        navigate('/sucesso');
+      })
+      .catch(() => alert('Ocorreu um erro ao realizar a reserva.'))
+      .then(() => setIsLoading(false));
   }
 
   if (seatsList === null) return <Loading />;
@@ -87,29 +140,7 @@ export default function Seats() {
         />
       ))}
       {buyerInfo.length > 0 && (
-        <ButtonReservation
-          disabled={isLoading}
-          onClick={() => {
-            setIsLoading(true);
-            const objectBooking = {
-              ids: buyerInfo.map((b) => b.idAssento),
-              compradores: buyerInfo,
-            };
-            makeBooking(objectBooking)
-              .then(() => {
-                objectBooking.compradores.forEach((b) => {
-                  b.seatName = seatsList.find((s) => s.id === b.idAssento).name;
-                });
-                setBooking({
-                  ...booking,
-                  buyers: objectBooking.compradores,
-                });
-                navigate('/sucesso');
-              })
-              .catch(() => alert('Ocorreu um erro ao realizar a reserva.'))
-              .then(() => setIsLoading(false));
-          }}
-        >
+        <ButtonReservation disabled={isLoading} onClick={() => handleMakeBooking()}>
           {isLoading ? <LoaderStyled /> : `Reservar assento(s)`}
         </ButtonReservation>
       )}
