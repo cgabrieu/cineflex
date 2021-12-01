@@ -46,9 +46,6 @@ const ContainerInput = styled.div`
     color: #ff9505;
     margin-bottom: 0px;
   }
-  input:invalid {
-    border: 1px solid red;
-  }
   input {
     width: 100%;
     height: 50px;

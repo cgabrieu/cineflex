@@ -86,7 +86,7 @@ export default function Seats() {
           seatName={seatsList.find((s) => s.id === b.idAssento).name}
         />
       ))}
-      {buyerInfo.length && (
+      {buyerInfo.length > 0 && (
         <ButtonReservation
           disabled={isLoading}
           onClick={() => {
