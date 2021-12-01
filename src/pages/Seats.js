@@ -1,13 +1,14 @@
-import styled from "styled-components";
-import React, { useState, useEffect, useContext } from "react";
-import { TitlePage, Button, Container } from "../assets/styles/styles";
-import { useParams, useNavigate } from "react-router-dom";
-import Loading from "../components/Loading";
-import Error from "../components/Error";
-import Seat from "../components/Seat";
-import InputsBuyer from "../components/InputsBuyer";
-import { getSeats, makeBooking } from "../services/api/api";
-import { BookingContext } from "../contexts/bookingContext";
+import styled from 'styled-components';
+import React, { useState, useEffect, useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { TitlePage, Button, Container } from '../assets/styles/styles';
+import Loading from '../components/Loading';
+import Error from '../components/Error';
+import Seat from '../components/Seat';
+import InputsBuyer from '../components/InputsBuyer';
+import { getSeats, makeBooking } from '../services/api/api';
+import { BookingContext } from '../contexts/bookingContext';
+import { ReactComponent as Loader } from '../assets/icons/loader.svg';
 
 export default function Seats() {
   const [seatsList, setSeatsList] = useState(null);
@@ -32,30 +33,29 @@ export default function Seats() {
       .catch(() => setSeatsList([]));
   }, []);
 
-  function handleSelectSeat(seatId) {
-    if (buyerInfo.some((b) => b.idAssento === seatId)) {
-      setBuyerInfo(buyerInfo.filter((b) => b.idAssento !== seatId));
-      drawSelectSeat(seatId, true);
-    } else {
-      setBuyerInfo([...buyerInfo, { idAssento: seatId, nome: "", cpf: "" }]);
-      drawSelectSeat(seatId, null);
-    }
-  }
-
   function drawSelectSeat(seatId, type) {
     const seatIndex = seatsList.findIndex((s) => s.id === seatId);
     const newSeatsList = seatsList.filter((s) => s.id !== seatId);
 
     setSeatsList(
-      [
-        ...newSeatsList,
-        { id: seatId, name: `${seatIndex + 1}`, isAvailable: type },
-      ].sort((a, b) => a.name - b.name)
+      [...newSeatsList, { id: seatId, name: `${seatIndex + 1}`, isAvailable: type }].sort(
+        (a, b) => a.name - b.name
+      )
     );
   }
 
+  function handleSelectSeat(seatId) {
+    if (buyerInfo.some((b) => b.idAssento === seatId)) {
+      setBuyerInfo(buyerInfo.filter((b) => b.idAssento !== seatId));
+      drawSelectSeat(seatId, true);
+    } else {
+      setBuyerInfo([...buyerInfo, { idAssento: seatId, nome: '', cpf: '' }]);
+      drawSelectSeat(seatId, null);
+    }
+  }
+
   if (seatsList === null) return <Loading />;
-  else if (seatsList.length === 0) return <Error />;
+  if (seatsList.length === 0) return <Error />;
 
   return (
     <Container>
@@ -72,7 +72,7 @@ export default function Seats() {
 
         <ContainerOptions>
           <Seat available={null} showText />
-          <Seat available={true} showText />
+          <Seat available showText />
           <Seat available={false} showText />
         </ContainerOptions>
       </div>
@@ -88,12 +88,13 @@ export default function Seats() {
       ))}
       {buyerInfo.length && (
         <ButtonReservation
+          disabled={isLoading}
           onClick={() => {
             setIsLoading(true);
             const objectBooking = {
               ids: buyerInfo.map((b) => b.idAssento),
               compradores: buyerInfo,
-            }
+            };
             makeBooking(objectBooking)
               .then(() => {
                 objectBooking.compradores.forEach((b) => {
@@ -101,20 +102,27 @@ export default function Seats() {
                 });
                 setBooking({
                   ...booking,
-                  buyers: objectBooking.compradores
-                })
-                navigate("/sucesso");
+                  buyers: objectBooking.compradores,
+                });
+                navigate('/sucesso');
               })
-              .catch(() => alert("Ocorreu um erro ao realizar a reserva."))
+              .catch(() => alert('Ocorreu um erro ao realizar a reserva.'))
               .then(() => setIsLoading(false));
           }}
         >
-          Reservar assento(s)
+          {isLoading ? <LoaderStyled /> : `Reservar assento(s)`}
         </ButtonReservation>
       )}
     </Container>
   );
 }
+
+const LoaderStyled = styled(Loader)`
+  height: 30px;
+  path {
+    stroke: #ff9505;
+  }
+`;
 
 const ScreenContainer = styled.div`
   width: 345px;
@@ -161,4 +169,6 @@ const ButtonReservation = styled(Button)`
   width: 210px;
   background-color: #000;
   box-shadow: 0px 0px 5px 0px #ff9505;
+  display: flex;
+  justify-content: center;
 `;
