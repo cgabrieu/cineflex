@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import React, { useContext } from 'react';
-import { TitlePage, Button, Container } from '../assets/styles/styles';
+import { TitlePage, Button } from '../assets/styles/styles';
 import { BookingContext } from '../contexts/bookingContext';
 import { ReactComponent as TicketLogo } from '../assets/icons/ticket.svg';
 
@@ -9,8 +9,6 @@ export default function Success() {
   const { booking } = useContext(BookingContext);
 
   const { movie, showtime, buyers } = booking;
-
-  console.log(booking);
 
   return (
     <>

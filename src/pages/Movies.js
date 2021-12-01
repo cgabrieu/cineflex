@@ -22,8 +22,8 @@ export default function Movies() {
     <>
       <TitlePage>Selecione o filme</TitlePage>
       <ListMovies>
-        {listMovies.map((movie, index) => (
-          <Movie key={index} movie={movie} />
+        {listMovies.map((movie) => (
+          <Movie key={movie.id} movie={movie} />
         ))}
       </ListMovies>
     </>

@@ -1,12 +1,12 @@
-import { useContext } from "react";
-import styled from "styled-components";
-import { BookingContext } from "../contexts/bookingContext";
+import { useContext } from 'react';
+import styled from 'styled-components';
+import { BookingContext } from '../contexts/bookingContext';
 
 export default function FooterFilm() {
   const { booking } = useContext(BookingContext);
 
   const { movie, showtime } = booking;
-  
+
   return (
     <Footer>
       <Card>

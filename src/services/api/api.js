@@ -1,11 +1,11 @@
-import axios from "axios";
+import axios from 'axios';
 
 const api = axios.create({
-  baseURL: "https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex",
+  baseURL: 'https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex',
 });
 
 export function getMovies() {
-  return api.get("/movies");
+  return api.get('/movies');
 }
 
 export function getShowtimes(movieId) {
@@ -17,5 +17,5 @@ export function getSeats(showtimeId) {
 }
 
 export function makeBooking(booking) {
-  return api.post("/seats/book-many", booking);
+  return api.post('/seats/book-many', booking);
 }
