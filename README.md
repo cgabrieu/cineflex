@@ -2,7 +2,7 @@
 
 <div align="center">
   <a href="https://cineflex-react-inky.vercel.app/">
-    <img src="https://user-images.githubusercontent.com/25062334/144301107-9b86368f-6548-452b-8f82-37a70ca4fe98.gif">
+    <img src="https://user-images.githubusercontent.com/25062334/144334194-db1537f7-fd25-42b2-8ba6-c3c0899fb8b1.gif">
   </a>
     <br />
     <a href="https://cineflex-react-inky.vercel.app/">View the deploy</a>
@@ -11,8 +11,9 @@
 
 ## About
 
-
+Do you like a movie? Hanging out with friends and stuffing yourself with popcorn? Use Cineflex right now, buy your ticket and have fun.
   
+<br/>
 
 ## Technologies
 
@@ -25,6 +26,8 @@ Tools that were used in the project:
   <img src='https://img.shields.io/badge/Cypress-000000?style=for-the-badge&logo=cypress&logoColor=white'>
   <img src='https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white'>
 </p>
+  
+<br/>
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -60,6 +63,8 @@ npm install
 ```sh
 npm start
 ```
+  
+<br/>
 
 ## Developer
 
